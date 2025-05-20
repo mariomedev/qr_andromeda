@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:qr_andromeda/core/constants/storage/app_assets.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../core/core.dart';
 
 class FloatingActionButtonShared extends StatelessWidget {
   const FloatingActionButtonShared({super.key});
@@ -17,11 +20,13 @@ class FloatingActionButtonShared extends StatelessWidget {
       ),
       child: FloatingActionButton(
         backgroundColor: colors.primary,
-        shape: CircleBorder(),
-        onPressed: () {},
+        shape: const CircleBorder(),
+        onPressed: () {
+          context.go('/home');
+        },
         child: SvgPicture.asset(
           AppAssets.qrScan,
-          colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn),
+          colorFilter: const ColorFilter.mode(Colors.black, BlendMode.srcIn),
           fit: BoxFit.cover,
           width: 40,
           height: 40,
