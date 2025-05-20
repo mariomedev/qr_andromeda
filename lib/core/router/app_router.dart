@@ -1,14 +1,22 @@
 import 'package:go_router/go_router.dart';
-import 'package:qr_andromeda/features/generete_qr/presentation/screen/generate_qr_screen.dart';
-import 'package:qr_andromeda/features/home/presentation/screen/screen.dart';
+
+import '../../features/screens.dart';
 
 final GoRouter goRouter = GoRouter(
   initialLocation: '/home',
   routes: [
-    GoRoute(path: '/home', builder: (context, state) => const HomeSreen()),
+    GoRoute(path: '/home', builder: (context, state) => const HomeScreen()),
     GoRoute(
       path: '/generate_qr',
       builder: (context, state) => const GenerateQrScreen(),
+    ),
+    GoRoute(
+      path: '/home',
+      builder: (context, state) => const GenerateCodeScreen(),
+    ),
+    GoRoute(
+      path: '/settings',
+      builder: (context, state) => const SettingsScreen(),
     ),
   ],
 );
