@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../../../core/core.dart';
 import '../../../domain/domain.dart';
@@ -48,6 +49,10 @@ class _ItemCard extends StatelessWidget {
                 ),
                 color: colors.onPrimaryContainer,
                 border: Border.all(color: colors.primary),
+              ),
+              child: SvgPicture.asset(
+                itemsGeneraCard[index].pathIcon,
+                colorFilter: ColorFilter.mode(colors.primary, BlendMode.srcIn),
               ),
             ),
           ),
