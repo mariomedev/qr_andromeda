@@ -8,12 +8,12 @@ class HomeSreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Stack(
-        children: [
-          QrImpl(),
-          CardQrRead(),
-          Scaffold(
+    return const Stack(
+      children: [
+        QrImpl(),
+        CardQrRead(),
+        SafeArea(
+          child: Scaffold(
             appBar: AppBarShared(),
             bottomNavigationBar: NavigationBarShared(),
             floatingActionButton: FloatingActionButtonShared(),
@@ -21,8 +21,8 @@ class HomeSreen extends StatelessWidget {
                 FloatingActionButtonLocation.centerDocked,
             backgroundColor: Colors.transparent,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -45,10 +45,10 @@ class _BuildItem extends StatelessWidget {
         ).push(MaterialPageRoute<void>(builder: (context) => page));
       },
       child: Container(
-        height: 80,
+        height: 90,
         margin: const EdgeInsets.fromLTRB(
           AppDimensions.kMargin30,
-          AppDimensions.kMargin70,
+          AppDimensions.kMargin115,
           AppDimensions.kMargin30,
           0,
         ),
