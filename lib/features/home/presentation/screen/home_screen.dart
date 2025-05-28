@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
         CardQrRead(),
         SafeArea(
           child: Scaffold(
-            appBar: AppBarShared(),
+            appBar: AppBarHome(),
             bottomNavigationBar: NavigationBarShared(),
             floatingActionButton: FloatingActionButtonShared(),
             floatingActionButtonLocation:
