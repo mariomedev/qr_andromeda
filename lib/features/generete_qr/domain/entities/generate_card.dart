@@ -13,14 +13,26 @@ class GenerateCardEntity {
 }
 
 List<GenerateCardEntity> itemsGeneraCard = [
-  GenerateCardEntity(title: 'Text', route: '', pathIcon: AppAssets.textIcon),
+  GenerateCardEntity(
+    title: 'Text',
+    route: '/generate_qr/text_code',
+    pathIcon: AppAssets.textIcon,
+  ),
   GenerateCardEntity(
     title: 'WebSite',
     route: '',
     pathIcon: AppAssets.webSiteIcon,
   ),
-  GenerateCardEntity(title: 'Wi-Fi', route: '', pathIcon: AppAssets.wifiIcon),
-  GenerateCardEntity(title: 'Event', route: '', pathIcon: AppAssets.eventIcon),
+  GenerateCardEntity(
+    title: 'Wi-Fi',
+    route: '',
+    pathIcon: AppAssets.wifiIcon,
+  ),
+  GenerateCardEntity(
+    title: 'Event',
+    route: '',
+    pathIcon: AppAssets.eventIcon,
+  ),
   GenerateCardEntity(
     title: 'Contact',
     route: '',
@@ -41,7 +53,11 @@ List<GenerateCardEntity> itemsGeneraCard = [
     route: '',
     pathIcon: AppAssets.whatsAppIcon,
   ),
-  GenerateCardEntity(title: 'Email', route: '', pathIcon: AppAssets.emailIcon),
+  GenerateCardEntity(
+    title: 'Email',
+    route: '',
+    pathIcon: AppAssets.emailIcon,
+  ),
   GenerateCardEntity(
     title: 'Twitter',
     route: '',
