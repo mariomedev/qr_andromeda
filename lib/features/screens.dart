@@ -1,4 +1,10 @@
-export 'generate_code/presentation/screens/text_generate_code.dart';
 export 'generete_qr/presentation/screen/generate_qr_screen.dart';
 export 'home/presentation/screen/home_screen.dart';
 export 'settings/presentation/screen/settings_screen.dart';
+//code View
+export 'generate_code/presentation/screens/text_generate_code.dart';
+export 'generate_code/presentation/screens/web_side_generate_code.dart';
+export 'generate_code/presentation/screens/wifi_generate_code.dart';
+export 'generate_code/presentation/screens/event_generate_code.dart';
+export 'generate_code/presentation/screens/contact_generate_code.dart';
+export 'generate_code/presentation/screens/business_generate_code.dart';

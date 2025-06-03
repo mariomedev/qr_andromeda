@@ -3,21 +3,24 @@ import 'package:flutter/material.dart';
 import '../../../../core/core.dart';
 import 'widgets/widgets.dart';
 
-class TextGenerateCode extends StatelessWidget {
-  const TextGenerateCode({super.key});
+class WifiGenerateCode extends StatelessWidget {
+  const WifiGenerateCode({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AppBarCodeGenerate(
-        title: AppText.textTitle,
+        title: AppText.textWifi,
       ),
       body: BoxCodeGenerate(
-        title: AppText.textTitle,
-        iconSvg: AppAssets.textIcon,
+        title: AppText.textWifi,
+        iconSvg: AppAssets.wifiIcon,
         children: [
           const TextFieldCodeGenerate(
-            title: AppText.textTitle,
+            title: 'NetWork',
+          ),
+          const TextFieldCodeGenerate(
+            title: 'Password',
           ),
         ],
       ),

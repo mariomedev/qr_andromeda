@@ -13,7 +13,7 @@ class GenerateItemCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: GridView.builder(
-        itemCount: 12,
+        itemCount: itemsGeneraCard.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           mainAxisSpacing: 10,

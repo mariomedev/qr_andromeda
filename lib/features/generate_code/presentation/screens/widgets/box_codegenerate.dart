@@ -44,6 +44,7 @@ class BoxCodeGenerate extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(height: 1),
             Hero(
               tag: iconSvg,
               child: SvgPicture.asset(

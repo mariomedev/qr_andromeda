@@ -19,58 +19,58 @@ List<GenerateCardEntity> itemsGeneraCard = [
     pathIcon: AppAssets.textIcon,
   ),
   GenerateCardEntity(
-    title: 'WebSite',
-    route: '',
+    title: 'WebSide',
+    route: '/generate_qr/web_code',
     pathIcon: AppAssets.webSiteIcon,
   ),
   GenerateCardEntity(
     title: 'Wi-Fi',
-    route: '',
+    route: '/generate_qr/wifi',
     pathIcon: AppAssets.wifiIcon,
   ),
   GenerateCardEntity(
     title: 'Event',
-    route: '',
+    route: '/generate_qr/event',
     pathIcon: AppAssets.eventIcon,
   ),
   GenerateCardEntity(
     title: 'Contact',
-    route: '',
+    route: '/generate_qr/contact',
     pathIcon: AppAssets.contactIcon,
   ),
   GenerateCardEntity(
     title: 'Business',
-    route: '',
+    route: '/generate_qr/business',
     pathIcon: AppAssets.businessIcon,
   ),
-  GenerateCardEntity(
+  /* GenerateCardEntity(
     title: 'Location',
-    route: '',
+    route: '/generate_qr/',
     pathIcon: AppAssets.locationIcon,
   ),
   GenerateCardEntity(
     title: 'WhatsApp',
-    route: '',
+    route: '/generate_qr/',
     pathIcon: AppAssets.whatsAppIcon,
   ),
   GenerateCardEntity(
     title: 'Email',
-    route: '',
+    route: '/generate_qr/',
     pathIcon: AppAssets.emailIcon,
   ),
   GenerateCardEntity(
     title: 'Twitter',
-    route: '',
+    route: '/generate_qr/',
     pathIcon: AppAssets.twitterIcon,
   ),
   GenerateCardEntity(
     title: 'Instagram',
-    route: '',
+    route: '/generate_qr/',
     pathIcon: AppAssets.instagramIcon,
   ),
   GenerateCardEntity(
     title: 'Telephone',
-    route: '',
+    route: '/generate_qr/',
     pathIcon: AppAssets.telephoneIcon,
-  ),
+  ), */
 ];
