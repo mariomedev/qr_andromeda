@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/core.dart';
 
@@ -26,7 +27,9 @@ class AppBarShared extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              context.push('/settings');
+            },
             child: const Icon(Icons.menu_open_sharp),
           ),
         ),
