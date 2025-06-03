@@ -2,6 +2,7 @@ class AppDimensions {
   AppDimensions._();
 
   static const double kPadding5 = 5.0;
+  static const double kPadding10 = 10.0;
 
   static const double kBorderRadius6 = 6.0;
   static const double kBorderRadius8 = 8.0;

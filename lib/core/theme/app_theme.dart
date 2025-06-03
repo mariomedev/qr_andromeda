@@ -4,8 +4,8 @@ class AppTheme {
   AppTheme._();
 
   static ThemeData getTheme() => ThemeData(
-    colorScheme: ColorScheme.highContrastDark(
-      primary: Color.fromARGB(255, 0, 255, 85),
+    colorScheme: const ColorScheme.highContrastDark(
+      primary: Color.fromARGB(255, 0, 225, 255),
     ),
   );
 }
