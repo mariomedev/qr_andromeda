@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
+import '../../../shared/shared.dart';
 import 'widgets/widgets.dart';
 
 class EventGenerateCode extends StatelessWidget {

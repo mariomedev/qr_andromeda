@@ -40,6 +40,10 @@ final GoRouter goRouter = GoRouter(
       ],
     ),
     GoRoute(
+      path: '/history',
+      builder: (context, state) => const HistoryScreen(),
+    ),
+    GoRoute(
       path: '/settings',
       builder: (context, state) => const SettingsScreen(),
     ),

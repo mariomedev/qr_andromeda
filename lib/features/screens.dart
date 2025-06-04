@@ -1,6 +1,13 @@
-export 'generete_qr/presentation/screen/generate_qr_screen.dart';
+//home
 export 'home/presentation/screen/home_screen.dart';
+
+// generate and history
+export 'generete_qr/presentation/screen/generate_qr_screen.dart';
+export 'history/presentation/screen/history_screen.dart';
+
+// Settings
 export 'settings/presentation/screen/settings_screen.dart';
+
 //code View
 export 'generate_code/presentation/screens/text_generate_code.dart';
 export 'generate_code/presentation/screens/web_side_generate_code.dart';
