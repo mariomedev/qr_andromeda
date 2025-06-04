@@ -47,5 +47,13 @@ final GoRouter goRouter = GoRouter(
       path: '/settings',
       builder: (context, state) => const SettingsScreen(),
     ),
+    GoRoute(
+      path: '/open_file',
+      builder: (context, state) => const OpenFileQrScreen(),
+    ),
+    GoRoute(
+      path: '/show_qr',
+      builder: (context, state) => const ShowQrScreen(),
+    ),
   ],
 );

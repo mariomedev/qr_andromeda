@@ -5,6 +5,7 @@ class AppDimensions {
   static const double kPadding10 = 10.0;
   static const double kPadding15 = 15.0;
   static const double kPadding20 = 20.0;
+  static const double kPadding30 = 30.0;
 
   static const double kBorderRadius6 = 6.0;
   static const double kBorderRadius8 = 8.0;
@@ -16,4 +17,5 @@ class AppDimensions {
   static const double kMargin115 = 115.0;
 
   static const double kSpacing10 = 10.0;
+  static const double kSpacing30 = 30.0;
 }

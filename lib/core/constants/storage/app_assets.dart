@@ -29,4 +29,8 @@ class AppAssets {
   //History
   static String qrIcon = 'assets/svg/history/qr.svg';
   static String deleteIcon = 'assets/svg/history/delete.svg';
+
+  //open and Show
+  static String copyOpenShowIcon = 'assets/svg/open_show/copy.svg';
+  static String saveOpenShowIcon = 'assets/svg/open_show/save.svg';
 }
