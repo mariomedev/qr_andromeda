@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:qr_andromeda/core/core.dart';
+import 'package:qr_andromeda/features/shared/providers/navigator_provider.dart';
 
-class NavigationBarShared extends StatefulWidget {
+class NavigationBarShared extends ConsumerWidget {
   const NavigationBarShared({super.key});
 
   @override
-  State<NavigationBarShared> createState() => _NavigationBarSharedState();
-}
-
-class _NavigationBarSharedState extends State<NavigationBarShared> {
-  int _pageSeleted = 0;
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     final colors = Theme.of(context).colorScheme;
+    final handleNavigator = ref.watch(navigatorProvider);
     return Container(
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(6)),
       margin: const EdgeInsets.only(
@@ -33,20 +30,19 @@ class _NavigationBarSharedState extends State<NavigationBarShared> {
             _ItemCustom(
               title: 'Generate',
               pathImage: AppAssets.qrNavigatorBar,
-              isSelected: _pageSeleted == 0 ? true : false,
+              isSelected: handleNavigator == 0 ? true : false,
               onTap: () {
-                _pageSeleted = 0;
+                ref.read(navigatorProvider.notifier).update((state) => 0);
                 context.go('/generate_qr');
               },
             ),
             _ItemCustom(
               title: 'History',
               pathImage: AppAssets.historyNavigatorBar,
-              isSelected: _pageSeleted == 1 ? true : false,
+              isSelected: handleNavigator == 1 ? true : false,
               onTap: () {
-                _pageSeleted = 1;
-
-                setState(() {});
+                ref.read(navigatorProvider.notifier).update((state) => 1);
+                context.go('/history');
               },
             ),
           ],

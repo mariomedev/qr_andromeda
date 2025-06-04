@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:qr_andromeda/core/constants/constants.dart';
-import '../../../generate_code/presentation/screens/widgets/widgets.dart';
+import '../../../shared/shared.dart';
 import 'widgets/widgets.dart';
 
 class SettingsScreen extends StatelessWidget {
