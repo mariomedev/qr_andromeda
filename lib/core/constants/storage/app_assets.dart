@@ -19,10 +19,14 @@ class AppAssets {
   static String instagramIcon = 'assets/svg/generate_qr_icons/instagram.svg';
   static String telephoneIcon = 'assets/svg/generate_qr_icons/telephone.svg';
 
-  //settingd
+  //settings
   static String vibrateIcon = 'assets/svg/settings/vibrate.svg';
   static String beepIcon = 'assets/svg/settings/beep.svg';
   static String rateIcon = 'assets/svg/settings/rate_us.svg';
   static String shareIcon = 'assets/svg/settings/share.svg';
   static String privacyIcon = 'assets/svg/settings/privacy_policy.svg';
+
+  //History
+  static String qrIcon = 'assets/svg/history/qr.svg';
+  static String deleteIcon = 'assets/svg/history/delete.svg';
 }
