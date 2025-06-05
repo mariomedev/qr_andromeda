@@ -1,3 +1,8 @@
+//splash
+
+export 'splash/presentation/screen/onboarding_screen.dart';
+export 'splash/presentation/screen/splash_screen.dart';
+
 //home
 export 'home/presentation/screen/home_screen.dart';
 
