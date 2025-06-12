@@ -7,11 +7,13 @@ class BoxCodeGenerate extends StatelessWidget {
   final String title;
   final String iconSvg;
   final List<Widget> children;
+  final VoidCallback? onPressed;
   const BoxCodeGenerate({
     super.key,
     required this.title,
     required this.iconSvg,
     required this.children,
+    this.onPressed,
   });
 
   @override
@@ -63,7 +65,7 @@ class BoxCodeGenerate extends StatelessWidget {
               children: children,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: onPressed,
               child: const Text('Generate QR code'),
             ),
           ],

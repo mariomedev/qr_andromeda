@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/core.dart';
 import '../../../shared/shared.dart';
 import 'widgets/widgets.dart';
 
-class TextGenerateCode extends StatelessWidget {
+class TextGenerateCode extends StatefulWidget {
   const TextGenerateCode({super.key});
+
+  @override
+  State<TextGenerateCode> createState() => _TextGenerateCodeState();
+}
+
+class _TextGenerateCodeState extends State<TextGenerateCode> {
+  TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +25,16 @@ class TextGenerateCode extends StatelessWidget {
         title: AppText.textTitle,
         iconSvg: AppAssets.textIcon,
         children: [
-          const TextFieldCodeGenerate(
+          TextFieldCodeGenerate(
+            onChanged: (value) {
+              controller = TextEditingController(text: value);
+            },
             title: AppText.textTitle,
           ),
         ],
+        onPressed: () {
+          context.push('/show_qr/${controller.text}');
+        },
       ),
     );
   }
