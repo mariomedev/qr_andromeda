@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import '../../../../../../core/core.dart';
 
 class CardCustomShow extends StatelessWidget {
+  final String data;
+
   const CardCustomShow({
     super.key,
+    required this.data,
   });
 
   @override
@@ -26,14 +29,17 @@ class CardCustomShow extends StatelessWidget {
         horizontal: AppDimensions.kPadding20,
         vertical: AppDimensions.kPadding20,
       ),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Data',
-            style: TextStyle(fontSize: 18),
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
-          Text('https://www.youtube.com/watch?v=Zd9g7sKvgIM'),
+          Text(
+            data,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+          ),
         ],
       ),
     );

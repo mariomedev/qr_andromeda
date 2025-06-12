@@ -4,8 +4,12 @@ import '../../../../../../core/core.dart';
 import '../../widgets/button_open_show_qr.dart';
 
 class ButtonBarShow extends StatelessWidget {
+  final Function()? onPressedShare;
+  final Function()? onPressedSave;
   const ButtonBarShow({
     super.key,
+    this.onPressedShare,
+    this.onPressedSave,
   });
 
   @override
@@ -17,12 +21,12 @@ class ButtonBarShow extends StatelessWidget {
         ButtonOpenShowQr(
           title: 'Share',
           pathImage: AppAssets.shareIcon,
-          onPressed: () {},
+          onPressed: onPressedShare,
         ),
         ButtonOpenShowQr(
           title: 'Save',
           pathImage: AppAssets.saveOpenShowIcon,
-          onPressed: () {},
+          onPressed: onPressedSave,
         ),
       ],
     );
