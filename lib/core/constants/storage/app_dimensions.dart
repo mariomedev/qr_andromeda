@@ -16,6 +16,7 @@ class AppDimensions {
   static const double kMargin30 = 30.0;
   static const double kMargin115 = 115.0;
 
+  static const double kSpacing5 = 5.0;
   static const double kSpacing10 = 10.0;
   static const double kSpacing30 = 30.0;
 }

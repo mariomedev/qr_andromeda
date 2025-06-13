@@ -3,8 +3,6 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 
-import '../../../provider/providers.dart';
-
 class SettingsQrShow extends ConsumerStatefulWidget {
   @protected
   final PrettyQrDecoration decoration;
@@ -45,7 +43,7 @@ class _PrettyQrSettingsState extends ConsumerState<SettingsQrShow> {
     imageSizeEditingController = TextEditingController(
       text: ' 512w',
     );
-    kDefaultQrDecorationBrush = ref.read(pickerColorProvider);
+    kDefaultQrDecorationBrush = shapeColor;
   }
 
   @protected
@@ -294,7 +292,11 @@ class _PrettyQrSettingsState extends ConsumerState<SettingsQrShow> {
           content: SingleChildScrollView(
             child: HueRingPicker(
               onColorChanged: (value) {
-                ref.read(pickerColorProvider.notifier).state = value;
+                widget.onChanged?.call(
+                  widget.decoration.copyWith(
+                    shape: PrettyQrSmoothSymbol(color: value),
+                  ),
+                );
               },
               pickerColor: kDefaultQrDecorationBrush,
             ),

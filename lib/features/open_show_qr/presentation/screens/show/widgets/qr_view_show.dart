@@ -7,15 +7,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 
 import '../../../../../../core/core.dart';
+import '../../../../domain/domain.dart';
 import '../../../provider/providers.dart';
 import 'widgets.dart';
 
 class QrViewShow extends ConsumerStatefulWidget {
-  final String data;
+  final QREntity qr;
 
   const QrViewShow({
     super.key,
-    required this.data,
+    required this.qr,
   });
 
   @override
@@ -23,8 +24,6 @@ class QrViewShow extends ConsumerStatefulWidget {
 }
 
 class _QrViewShowState extends ConsumerState<QrViewShow> {
-  late final ProviderSubscription<Color> colorSubscription;
-
   @protected
   late QrCode qrCode;
 
@@ -34,11 +33,10 @@ class _QrViewShowState extends ConsumerState<QrViewShow> {
   @protected
   late PrettyQrDecoration decoration;
 
-  _colorSubscription() {
-    final currentColor = ref.read(pickerColorProvider);
-    decoration = PrettyQrDecoration(
+  _initialDecoration() {
+    return PrettyQrDecoration(
       shape: PrettyQrSmoothSymbol(
-        color: currentColor,
+        color: widget.qr.color,
       ),
       image: const PrettyQrDecorationImage(
         image: AssetImage('assets/img/icon.png'),
@@ -47,47 +45,117 @@ class _QrViewShowState extends ConsumerState<QrViewShow> {
       background: Colors.transparent,
       quietZone: PrettyQrQuietZone.zero,
     );
+  }
 
-    colorSubscription = ref.listenManual<Color>(
-      pickerColorProvider,
-      (prev, next) {
-        setState(() {
-          decoration = decoration.copyWith(
-            shape: PrettyQrSmoothSymbol(color: next),
-          );
-        });
-      },
+  final valueQuietZone = PrettyQrQuietZone.zero.value;
+  final valueQuietZone2 = PrettyQrQuietZone.standart.value;
+
+  _colorSubscription() {
+    final isNew = widget.qr.id <= 0;
+    if (isNew) {
+      decoration = ref.read(settingsQrProvider);
+    } else {
+      decoration = _initialDecoration();
+    }
+
+    ref.listenManual<PrettyQrDecoration>(settingsQrProvider, (prev, next) {
+      decoration = next;
+      setState(() {});
+    });
+  }
+
+  Future<void> _handleSaveOrUpdate(BuildContext context) async {
+    final notifier = ref.read(qrProvider);
+    final isNew = widget.qr.id <= 0;
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(isNew ? 'Save Data' : 'Update Data'),
+        content: Text(
+          isNew
+              ? 'Do you want to save this Data?'
+              : 'Do you want to update this Data?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Confirm'),
+          ),
+        ],
+      ),
     );
+
+    if (confirmed != true) return;
+
+    final newQr = QREntity(
+      data: widget.qr.data,
+      updateAt: DateTime.now(),
+      createdAt: isNew ? DateTime.now() : widget.qr.createdAt,
+    )..color = shapeColor;
+
+    if (isNew) {
+      final id = await notifier.saveQRData(data: newQr);
+      widget.qr.createdAt = DateTime.now();
+      widget.qr.id = id;
+    } else {
+      await notifier.updateQrData(id: widget.qr.id, data: newQr);
+    }
+
+    if (!context.mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(isNew ? 'QR saved!' : 'QR updated!'),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
+
+  Color get shapeColor {
+    var shape = decoration.shape;
+    if (shape is PrettyQrSmoothSymbol) return shape.color;
+    if (shape is PrettyQrRoundedSymbol) return shape.color;
+    return Colors.black;
   }
 
   QrImage _getQrImage() {
     qrCode = QrCode.fromData(
-      data: widget.data,
+      data: widget.qr.data,
       errorCorrectLevel: QrErrorCorrectLevel.H,
     );
     return QrImage(qrCode);
   }
 
-  Future<ByteData?> _imageToBytes(size) async {
-    final freshQrImage = _getQrImage();
-
-    return await freshQrImage.toImageAsBytes(
-      decoration: decoration,
-      format: ui.ImageByteFormat.png,
-      size: size,
-    );
+  Future<ByteData?> _imageToBytes(int size) async {
+    try {
+      final freshQrImage = _getQrImage();
+      return await freshQrImage.toImageAsBytes(
+        decoration: decoration,
+        format: ui.ImageByteFormat.png,
+        size: size,
+      );
+    } catch (e) {
+      debugPrint('Error generating QR image: $e');
+      return null;
+    }
   }
 
   @override
   void initState() {
     _colorSubscription();
     qrImage = _getQrImage();
+
     super.initState();
   }
 
   @override
   void dispose() {
-    colorSubscription.close();
     super.dispose();
   }
 
@@ -120,9 +188,9 @@ class _QrViewShowState extends ConsumerState<QrViewShow> {
         ),
         SettingsQrShow(
           decoration: decoration,
-          onChanged: (value) => setState(() {
-            decoration = value;
-          }),
+          onChanged: (value) {
+            ref.read(settingsQrProvider.notifier).state = value;
+          },
           onExportPressed: (size) async {
             await permissionHandler.requestPermissionStorage();
             final image = await _imageToBytes(size);
@@ -134,11 +202,12 @@ class _QrViewShowState extends ConsumerState<QrViewShow> {
           },
         ),
         ButtonBarShow(
-          onPressedSave: () {},
+          onPressedSave: () {
+            _handleSaveOrUpdate(context);
+          },
           onPressedShare: () async {
             final image = await _imageToBytes(1024);
-            final result = shareAdapter.shareImageFromByteData(image);
-            print('Share Image: ${result.toString()}');
+            shareAdapter.shareImageFromByteData(image);
           },
         ),
       ],

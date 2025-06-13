@@ -5,17 +5,21 @@ import '../../../../shared/shared.dart';
 import 'widgets/widgets.dart';
 
 class OpenFileQrScreen extends StatelessWidget {
-  const OpenFileQrScreen({super.key});
+  final int id;
+  const OpenFileQrScreen({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: AppBarCodeGenerate(title: 'Result'),
+    return Scaffold(
+      appBar: const AppBarCodeGenerate(title: 'Result'),
       body: Column(
-        spacing: AppDimensions.kPadding30,
+        mainAxisAlignment: MainAxisAlignment.center,
+        spacing: AppDimensions.kSpacing30,
         children: [
-          CardCustomOpen(),
-          ButtonBarOpen(),
+          CardCustomOpen(
+            id: id, // Replace with the actual ID you want to use
+          ),
+          //ButtonBarOpen(),
         ],
       ),
     );

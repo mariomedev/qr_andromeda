@@ -1,16 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
+import 'package:qr_andromeda/features/open_show_qr/domain/entities/qr_entity.dart';
+import 'package:qr_andromeda/features/open_show_qr/presentation/provider/qr_data/qr_provider.dart';
 
 import '../../../../../../core/core.dart';
 
-class CardCustomOpen extends StatelessWidget {
+class CardCustomOpen extends ConsumerStatefulWidget {
+  final int id;
   const CardCustomOpen({
     super.key,
+    required this.id,
   });
+
+  @override
+  ConsumerState<CardCustomOpen> createState() => _CardCustomOpenState();
+}
+
+class _CardCustomOpenState extends ConsumerState<CardCustomOpen> {
+  QREntity qrData = QREntity(
+    data: 'Loading...',
+  );
+  _getQrData() async {
+    final data = await ref.read(qrProvider).getQrById(id: widget.id);
+
+    if (data != null) {
+      setState(() {
+        qrData = data;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    _getQrData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
+    final createdAtformatted = DateFormat(
+      'dd/MM/yyyy – HH:mm',
+    ).format(qrData.createdAt ?? DateTime.now());
+    final updateAtformatted = DateFormat(
+      'dd/MM/yyyy – HH:mm',
+    ).format(qrData.updateAt ?? DateTime.now());
     return Container(
       decoration: BoxDecoration(
         color: colors.onPrimaryContainer,
@@ -30,7 +67,7 @@ class CardCustomOpen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
-            spacing: AppDimensions.kSpacing10,
+            spacing: AppDimensions.kSpacing30,
             children: [
               SvgPicture.asset(
                 AppAssets.qrScan,
@@ -39,23 +76,25 @@ class CardCustomOpen extends StatelessWidget {
                   BlendMode.srcIn,
                 ),
               ),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: AppDimensions.kSpacing10,
+                spacing: AppDimensions.kSpacing5,
                 children: [
-                  Text('Data'),
-                  Text('16 Dec 2022, 9:30 pm'),
+                  Text('createdAt: $createdAtformatted'),
+                  Text('updateAt: $updateAtformatted'),
                 ],
               ),
             ],
           ),
           const Divider(),
-          const Align(
+          Align(
             alignment: Alignment.centerLeft,
-            child: Text('https://www.youtube.com/watch?v=Zd9g7sKvgIM'),
+            child: Text(qrData.data),
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              context.push('/show_qr/${widget.id}');
+            },
             child: Text(
               'Show QR Code',
               style: TextStyle(

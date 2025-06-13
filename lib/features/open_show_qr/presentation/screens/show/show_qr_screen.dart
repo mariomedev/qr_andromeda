@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qr_andromeda/features/open_show_qr/domain/entities/qr_entity.dart';
 
 import '../../../../../core/core.dart';
 import '../../../../shared/shared.dart';
@@ -19,7 +20,7 @@ class ShowQrScreen extends StatelessWidget {
               data: data,
             ),
             QrViewShow(
-              data: data,
+              qr: QREntity(data: data),
             ),
             const SizedBox(height: AppDimensions.kMargin30),
           ],
