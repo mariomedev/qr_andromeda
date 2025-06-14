@@ -19,7 +19,7 @@ class AppBarShared extends StatelessWidget implements PreferredSizeWidget {
           width: 40,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: colors.onSecondaryContainer,
+              backgroundColor: colors.onPrimaryContainer,
               padding: EdgeInsets.zero,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(

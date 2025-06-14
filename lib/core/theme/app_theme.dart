@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AppTheme {
-  AppTheme._();
+import '../../features/settings/presentation/provider/theme_provider.dart';
 
-  static ThemeData getTheme() => ThemeData(
-    colorScheme: const ColorScheme.highContrastDark(
-      primary: Color.fromARGB(255, 0, 225, 255),
-    ),
-  );
-}
+final themeProvider = Provider<ThemeData>((ref) {
+  final isDarkMode = ref.watch(isDarkModeProvider);
+  final colorTheme = ref.watch(themeColorProvider);
+
+  if (isDarkMode) {
+    return ThemeData(
+      colorScheme: ColorScheme.dark(
+        primary: colorTheme,
+      ),
+    );
+  }
+  if (!isDarkMode) {
+    return ThemeData(
+      colorScheme: ColorScheme.light(
+        primary: colorTheme,
+      ),
+    );
+  }
+  return ThemeData();
+});

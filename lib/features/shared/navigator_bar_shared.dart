@@ -15,7 +15,18 @@ class NavigationBarShared extends ConsumerWidget {
     final colors = Theme.of(context).colorScheme;
     final handleNavigator = ref.watch(navigatorProvider);
     return Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(6)),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(6),
+        boxShadow: [
+          BoxShadow(
+            color: colors.brightness == Brightness.light
+                ? Colors.black.withValues(alpha: 0.2)
+                : Colors.white.withValues(alpha: 0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
       margin: const EdgeInsets.only(
         left: AppDimensions.kMargin30,
         bottom: AppDimensions.kMargin25,
@@ -73,6 +84,9 @@ class _ItemCustomState extends State<_ItemCustom> {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
+    final colorButton = colors.brightness == Brightness.light
+        ? Colors.black
+        : Colors.white;
     return InkWell(
       splashColor: colors.primary.withValues(alpha: 0.3),
       onTap: widget.onTap,
@@ -82,7 +96,7 @@ class _ItemCustomState extends State<_ItemCustom> {
           SvgPicture.asset(
             widget.pathImage,
             colorFilter: ColorFilter.mode(
-              widget.isSelected ? colors.primary : Colors.white,
+              widget.isSelected ? colors.primary : colorButton,
               BlendMode.srcIn,
             ),
           ),
@@ -90,14 +104,14 @@ class _ItemCustomState extends State<_ItemCustom> {
           Text(
             widget.title,
             style: TextStyle(
-              color: widget.isSelected ? colors.primary : Colors.white,
+              color: widget.isSelected ? colors.primary : colorButton,
             ),
           ),
           const Spacer(),
           Container(
             height: 5,
             width: 50,
-            color: widget.isSelected ? colors.primary : Colors.white,
+            color: widget.isSelected ? colors.primary : colorButton,
           ),
         ],
       ),

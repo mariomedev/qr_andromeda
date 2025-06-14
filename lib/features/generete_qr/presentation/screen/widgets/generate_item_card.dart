@@ -56,6 +56,15 @@ class _ItemCard extends StatelessWidget {
                   ),
                   color: colors.onPrimaryContainer,
                   border: Border.all(color: colors.primary),
+                  boxShadow: [
+                    BoxShadow(
+                      color: colors.brightness == Brightness.light
+                          ? Colors.black.withValues(alpha: 0.2)
+                          : Colors.white.withValues(alpha: 0.1),
+                      blurRadius: 10,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(AppDimensions.kMargin30),

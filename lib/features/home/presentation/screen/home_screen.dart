@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Stack(
       children: [
-        //QrImpl(),
+        QrImpl(),
         CardQrRead(),
         SafeArea(
           child: Scaffold(

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:qr_andromeda/core/constants/constants.dart';
+import 'package:qr_andromeda/features/settings/presentation/provider/theme_provider.dart';
 import '../../../shared/shared.dart';
 import 'widgets/widgets.dart';
 
@@ -18,10 +21,11 @@ class SettingsScreen extends StatelessWidget {
   }
 }
 
-class _SettingsView extends StatelessWidget {
+class _SettingsView extends ConsumerWidget {
   const _SettingsView();
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDarkMode = ref.watch(isDarkModeProvider);
     final colors = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -41,14 +45,20 @@ class _SettingsView extends StatelessWidget {
             ),
           ),
           CardSettings(
-            title: 'Vibrate',
-            subtitle: 'Vibration when scan is done.',
+            title: 'Theme Color',
+            subtitle: 'Change the theme color of the app.',
             pathIcon: AppAssets.vibrateIcon,
+            onTap: () => chageColor(context, ref),
           ),
           CardSettings(
-            title: 'Beep',
-            subtitle: 'Beep when scan is done.',
+            title: isDarkMode ? 'Mode Dark' : 'Mode Light',
+            subtitle: 'Change the app to dark mode.',
             pathIcon: AppAssets.beepIcon,
+            onTap: () {
+              ref
+                  .read(isDarkModeProvider.notifier)
+                  .update((state) => !isDarkMode);
+            },
           ),
           Text(
             'Support',
@@ -74,6 +84,36 @@ class _SettingsView extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  void chageColor(BuildContext context, WidgetRef ref) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          titlePadding: const EdgeInsets.all(0),
+          contentPadding: const EdgeInsets.all(0),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(500),
+              bottom: Radius.circular(100),
+            ),
+          ),
+          content: SingleChildScrollView(
+            child: HueRingPicker(
+              onColorChanged: (value) {
+                ref
+                    .read(themeColorProvider.notifier)
+                    .update(
+                      (state) => value,
+                    );
+              },
+              pickerColor: ref.read(themeColorProvider),
+            ),
+          ),
+        );
+      },
     );
   }
 }

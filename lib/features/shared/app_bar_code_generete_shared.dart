@@ -22,7 +22,17 @@ class AppBarCodeGenerate extends StatelessWidget
             decoration: BoxDecoration(
               color: colors.onPrimaryContainer,
               borderRadius: BorderRadius.circular(AppDimensions.kBorderRadius6),
+              boxShadow: [
+                BoxShadow(
+                  color: colors.brightness == Brightness.light
+                      ? Colors.black.withValues(alpha: 0.2)
+                      : Colors.white.withValues(alpha: 0.2),
+                  blurRadius: 10,
+                  offset: const Offset(0, 2),
+                ),
+              ],
             ),
+
             child: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios_new_sharp,

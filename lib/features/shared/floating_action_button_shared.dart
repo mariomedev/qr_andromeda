@@ -13,15 +13,20 @@ class FloatingActionButtonShared extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final colors = Theme.of(context).colorScheme;
+    final colorButton = colors.brightness == Brightness.light
+        ? colors.primary
+        : Colors.black;
     return Container(
       height: 70,
       width: 70,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        boxShadow: [BoxShadow(blurRadius: 30, color: colors.primary)],
+        boxShadow: [BoxShadow(blurRadius: 15, color: colors.primary)],
       ),
       child: FloatingActionButton(
-        backgroundColor: colors.primary,
+        backgroundColor: colors.brightness == Brightness.light
+            ? colors.surface
+            : colors.primary,
         shape: const CircleBorder(),
         onPressed: () {
           ref.watch(navigatorProvider.notifier).update((state) => 5);
@@ -29,7 +34,7 @@ class FloatingActionButtonShared extends ConsumerWidget {
         },
         child: SvgPicture.asset(
           AppAssets.qrScan,
-          colorFilter: const ColorFilter.mode(Colors.black, BlendMode.srcIn),
+          colorFilter: ColorFilter.mode(colorButton, BlendMode.srcIn),
           fit: BoxFit.cover,
           width: 40,
           height: 40,

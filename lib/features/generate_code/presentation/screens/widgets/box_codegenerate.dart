@@ -30,7 +30,7 @@ class BoxCodeGenerate extends StatelessWidget {
           vertical: AppDimensions.kPadding10,
         ),
         decoration: BoxDecoration(
-          color: colors.onTertiaryContainer,
+          color: colors.onPrimaryContainer,
           borderRadius: BorderRadius.circular(
             AppDimensions.kBorderRadius6,
           ),
@@ -40,6 +40,15 @@ class BoxCodeGenerate extends StatelessWidget {
               width: 2,
             ),
           ),
+          boxShadow: [
+            BoxShadow(
+              color: colors.brightness == Brightness.light
+                  ? Colors.black.withValues(alpha: 0.2)
+                  : Colors.white.withValues(alpha: 0.1),
+              blurRadius: 10,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
         child: Column(
           spacing: 15,
