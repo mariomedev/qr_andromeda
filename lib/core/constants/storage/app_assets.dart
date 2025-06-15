@@ -1,5 +1,9 @@
 class AppAssets {
   AppAssets._();
+
+  //icon
+  static String iconQrAndromeda = 'assets/img/icon.png';
+
   //home Screen
   static String qrNavigatorBar = 'assets/svg/home_icons/qr_generate.svg';
   static String qrScan = 'assets/svg/home_icons/qr_scan.svg';

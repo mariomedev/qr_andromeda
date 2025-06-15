@@ -3,8 +3,8 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:qr_andromeda/core/constants/constants.dart';
-import 'package:qr_andromeda/features/settings/presentation/provider/theme_provider.dart';
 import '../../../shared/shared.dart';
+import '../provider/providers.dart';
 import 'widgets/widgets.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -32,57 +32,62 @@ class _SettingsView extends ConsumerWidget {
         horizontal: AppDimensions.kPadding20,
         vertical: AppDimensions.kPadding20,
       ),
-      child: Column(
-        spacing: 30,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: SingleChildScrollView(
+        child: Column(
+          spacing: 30,
+          crossAxisAlignment: CrossAxisAlignment.start,
 
-        children: [
-          Text(
-            'Settings',
-            style: TextStyle(
-              fontSize: 26,
-              color: colors.primary,
+          children: [
+            Text(
+              'Settings',
+              style: TextStyle(
+                fontSize: 26,
+                color: colors.primary,
+              ),
             ),
-          ),
-          CardSettings(
-            title: 'Theme Color',
-            subtitle: 'Change the theme color of the app.',
-            pathIcon: AppAssets.vibrateIcon,
-            onTap: () => chageColor(context, ref),
-          ),
-          CardSettings(
-            title: isDarkMode ? 'Mode Dark' : 'Mode Light',
-            subtitle: 'Change the app to dark mode.',
-            pathIcon: AppAssets.beepIcon,
-            onTap: () {
-              ref
-                  .read(isDarkModeProvider.notifier)
-                  .update((state) => !isDarkMode);
-            },
-          ),
-          Text(
-            'Support',
-            style: TextStyle(
-              fontSize: 26,
-              color: colors.primary,
+            CardSettings(
+              title: 'Theme Color',
+              subtitle: 'Change the theme color of the app.',
+              pathIcon: AppAssets.vibrateIcon,
+              onTap: () => chageColor(context, ref),
             ),
-          ),
-          CardSettings(
-            title: 'Rate Us',
-            subtitle: 'Your best reward to us.',
-            pathIcon: AppAssets.rateIcon,
-          ),
-          CardSettings(
-            title: 'Share',
-            subtitle: 'Share app with others.',
-            pathIcon: AppAssets.shareIcon,
-          ),
-          CardSettings(
-            title: 'Privacy Policy',
-            subtitle: 'Follow our policies that benefits you.',
-            pathIcon: AppAssets.privacyIcon,
-          ),
-        ],
+            CardSettings(
+              title: isDarkMode ? 'Mode Dark' : 'Mode Light',
+              subtitle: 'Change the app to dark mode.',
+              pathIcon: AppAssets.beepIcon,
+              onTap: () {
+                ref
+                    .read(isDarkModeProvider.notifier)
+                    .update((state) => !isDarkMode);
+                ref
+                    .read(settingProvider)
+                    .setIsDarkMode(SharedPrefesKeys.isDarkMode, !isDarkMode);
+              },
+            ),
+            Text(
+              'Support',
+              style: TextStyle(
+                fontSize: 26,
+                color: colors.primary,
+              ),
+            ),
+            CardSettings(
+              title: 'Rate Us',
+              subtitle: 'Your best reward to us.',
+              pathIcon: AppAssets.rateIcon,
+            ),
+            CardSettings(
+              title: 'Share',
+              subtitle: 'Share app with others.',
+              pathIcon: AppAssets.shareIcon,
+            ),
+            CardSettings(
+              title: 'Privacy Policy',
+              subtitle: 'Follow our policies that benefits you.',
+              pathIcon: AppAssets.privacyIcon,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -108,6 +113,9 @@ class _SettingsView extends ConsumerWidget {
                     .update(
                       (state) => value,
                     );
+                ref
+                    .read(settingProvider)
+                    .setThemeColor(SharedPrefesKeys.colorTheme, value);
               },
               pickerColor: ref.read(themeColorProvider),
             ),

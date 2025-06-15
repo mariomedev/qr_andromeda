@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_svg/svg.dart';
-
 import '../../../../../core/core.dart';
 import 'widgets.dart';
 
@@ -24,13 +22,11 @@ class ViewOnboarding extends StatelessWidget {
             painter: _Painter(color: colors),
           ),
         ),
-        SvgPicture.asset(
-          AppAssets.qrScan,
-          height: size.height * 0.2,
-          width: size.width * 0.2,
-          colorFilter: const ColorFilter.mode(
-            Colors.black,
-            BlendMode.srcIn,
+
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.5,
+          child: Image.asset(
+            AppAssets.iconQrAndromeda,
           ),
         ),
         const Spacer(),
@@ -38,8 +34,8 @@ class ViewOnboarding extends StatelessWidget {
           'Get Started',
           style: TextStyle(
             fontSize: 42,
-            color: Colors.black,
             fontWeight: FontWeight.bold,
+            color: Colors.black,
           ),
         ),
         const Padding(
@@ -67,7 +63,9 @@ class _Painter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = color.onSecondaryContainer
+      ..color = color.brightness == Brightness.dark
+          ? color.onSecondaryContainer
+          : color.primary
       ..strokeWidth = 50;
 
     final path = Path();

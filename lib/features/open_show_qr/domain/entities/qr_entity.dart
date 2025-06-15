@@ -23,5 +23,5 @@ class QREntity {
   @ignore
   Color get color => Color(colorValue);
 
-  set color(Color c) => colorValue = c.value;
+  set color(Color c) => colorValue = c.toARGB32();
 }

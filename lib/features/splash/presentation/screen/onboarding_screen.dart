@@ -7,10 +7,9 @@ class OnboardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
-    return Scaffold(
-      backgroundColor: colors.primary,
-      body: const ViewOnboarding(),
+    return const Scaffold(
+      backgroundColor: Colors.white,
+      body: ViewOnboarding(),
     );
   }
 }

@@ -45,11 +45,14 @@ class BottomOnboarding extends ConsumerWidget {
                       AppDimensions.kPadding20,
                     ),
                     elevation: 5,
-                    backgroundColor: colors.primary,
+                    backgroundColor: Colors.white,
                     iconColor: colors.onPrimaryContainer,
                     shadowColor: colors.primary,
                   ),
-                  child: const Icon(Icons.arrow_forward_ios),
+                  child: Icon(
+                    Icons.arrow_forward_ios,
+                    color: colors.primary,
+                  ),
                 ),
               ),
             ],
@@ -67,7 +70,9 @@ class _Painter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = color.onSecondaryContainer
+      ..color = color.brightness == Brightness.dark
+          ? color.onPrimaryContainer
+          : color.primary
       ..strokeWidth = 50;
 
     final path = Path();
