@@ -8,14 +8,17 @@ class HistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
-      child: Scaffold(
-        appBar: AppBarShared(title: 'History'),
-        body: BodyHistory(),
-        floatingActionButton: FloatingActionButtonShared(),
-        bottomNavigationBar: NavigationBarShared(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      ),
+    return const Stack(
+      children: [
+        Scaffold(
+          appBar: AppBarShared(title: 'History'),
+          body: BodyHistory(),
+          floatingActionButton: FloatingActionButtonShared(),
+          bottomNavigationBar: NavigationBarShared(),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+        ),
+      ],
     );
   }
 }

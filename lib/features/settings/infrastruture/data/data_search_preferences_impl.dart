@@ -12,13 +12,13 @@ class DataSearchPreferencesImpl implements DataSettings {
   @override
   Future<Color> getColorTheme({required String key}) async {
     final color = await localStorage.getInt(key);
-    final Color newColor = Color(color ?? 4282473701);
+    final Color newColor = Color(color ?? 4282473719);
     return newColor;
   }
 
   @override
   Future<bool> getIsDarkTheme({required String key}) async {
-    return await localStorage.getBool(key) ?? true;
+    return await localStorage.getBool(key) ?? false;
   }
 
   @override

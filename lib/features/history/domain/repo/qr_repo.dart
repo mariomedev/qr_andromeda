@@ -1,9 +1,9 @@
 import 'package:qr_andromeda/features/open_show_qr/domain/entities/qr_entity.dart';
 
-abstract class QRRepo {
+abstract class QRRepoHistory {
   Future<List<QREntity>> getListQrData({
     required int offset,
     required int limit,
   });
-  Future<void> deleteQRData({required int id});
+  Future<bool?> deleteQRData({required int id});
 }
