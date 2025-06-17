@@ -11,6 +11,7 @@ class AppAssets {
 
   //generate_qr
   static String textIcon = 'assets/svg/generate_qr_icons/text.svg';
+  static String settings = 'assets/svg/generate_qr_icons/settings.svg';
   static String webSiteIcon = 'assets/svg/generate_qr_icons/website.svg';
   static String wifiIcon = 'assets/svg/generate_qr_icons/wi_fi.svg';
   static String eventIcon = 'assets/svg/generate_qr_icons/event.svg';
@@ -29,6 +30,12 @@ class AppAssets {
   static String rateIcon = 'assets/svg/settings/rate_us.svg';
   static String shareIcon = 'assets/svg/settings/share.svg';
   static String privacyIcon = 'assets/svg/settings/privacy_policy.svg';
+  static String brightnessDown = 'assets/svg/settings/brightness_down.svg';
+  static String brush = 'assets/svg/settings/brush.svg';
+  static String arrowBigLeftLines =
+      'assets/svg/settings/arrow-big-left-lines.svg';
+  static String brightnessDownFill =
+      'assets/svg/settings/brightness_down_fill.svg';
 
   //History
   static String qrIcon = 'assets/svg/history/qr.svg';

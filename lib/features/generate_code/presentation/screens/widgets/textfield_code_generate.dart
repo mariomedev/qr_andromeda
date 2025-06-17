@@ -27,13 +27,15 @@ class TextFieldCodeGenerate extends StatelessWidget {
         Radius.circular(AppDimensions.kBorderRadius6),
       ),
     );
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(title),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppDimensions.kPadding10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: AppDimensions.kSpacing10,
+        children: [
+          Text(title),
+
+          TextField(
             maxLines: maxLines,
             decoration: InputDecoration(
               border: border,
@@ -44,8 +46,8 @@ class TextFieldCodeGenerate extends StatelessWidget {
             ),
             onChanged: onChanged,
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

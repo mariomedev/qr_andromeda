@@ -48,13 +48,15 @@ class _SettingsView extends ConsumerWidget {
             CardSettings(
               title: 'Theme Color',
               subtitle: 'Change the theme color of the app.',
-              pathIcon: AppAssets.vibrateIcon,
+              pathIcon: AppAssets.brush,
               onTap: () => chageColor(context, ref),
             ),
             CardSettings(
               title: isDarkMode ? 'Mode Dark' : 'Mode Light',
-              subtitle: 'Change the app to dark mode.',
-              pathIcon: AppAssets.beepIcon,
+              subtitle: 'Change the app brightness.',
+              pathIcon: isDarkMode
+                  ? AppAssets.brightnessDown
+                  : AppAssets.brightnessDownFill,
               onTap: () {
                 ref
                     .read(isDarkModeProvider.notifier)
@@ -64,7 +66,8 @@ class _SettingsView extends ConsumerWidget {
                     .setIsDarkMode(SharedPrefesKeys.isDarkMode, !isDarkMode);
               },
             ),
-            Text(
+            //! This is for production version.
+            /*  Text(
               'Support',
               style: TextStyle(
                 fontSize: 26,
@@ -85,7 +88,7 @@ class _SettingsView extends ConsumerWidget {
               title: 'Privacy Policy',
               subtitle: 'Follow our policies that benefits you.',
               pathIcon: AppAssets.privacyIcon,
-            ),
+            ), */
           ],
         ),
       ),

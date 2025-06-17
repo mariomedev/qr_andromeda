@@ -1,7 +1,7 @@
 class AppText {
   AppText._();
 
-  static const textTitle = 'text';
+  static const textTitle = 'Text';
   static const textWebSide = 'WebSide';
   static const textWifi = 'wifi';
   static const textEvent = 'Event';

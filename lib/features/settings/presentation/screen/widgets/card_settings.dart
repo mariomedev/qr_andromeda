@@ -25,7 +25,6 @@ class CardSettings extends StatelessWidget {
     final colors = Theme.of(context).colorScheme;
     return Container(
       width: double.infinity,
-
       decoration: BoxDecoration(
         color: colors.onPrimaryContainer,
         borderRadius: BorderRadius.circular(
@@ -55,6 +54,8 @@ class CardSettings extends StatelessWidget {
             colors.primary,
             BlendMode.srcIn,
           ),
+          height: 30,
+          width: 30,
         ),
         title: Text(title),
         subtitle: Text(subtitle),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/core.dart';
 
@@ -13,45 +15,36 @@ class AppBarCodeGenerate extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    return SafeArea(
-      child: Row(
-        spacing: 20,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(left: AppDimensions.kMargin20),
-            decoration: BoxDecoration(
-              color: colors.onPrimaryContainer,
-              borderRadius: BorderRadius.circular(AppDimensions.kBorderRadius6),
-              boxShadow: [
-                BoxShadow(
-                  color: colors.brightness == Brightness.light
-                      ? Colors.black.withValues(alpha: 0.2)
-                      : Colors.white.withValues(alpha: 0.2),
-                  blurRadius: 10,
-                  offset: const Offset(0, 2),
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      child: AppBar(
+        title: Text(title),
+        leading: Container(
+          margin: const EdgeInsets.all(5),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(40, 40),
+              backgroundColor: colors.onPrimaryContainer,
+              padding: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(
+                  AppDimensions.kBorderRadius6,
                 ),
-              ],
-            ),
-
-            child: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios_new_sharp,
-                color: colors.primary,
               ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+            ),
+            onPressed: () {
+              context.pop();
+            },
+            child: SvgPicture.asset(
+              AppAssets.arrowBigLeftLines,
+              colorFilter: ColorFilter.mode(colors.primary, BlendMode.srcIn),
             ),
           ),
-          Text(
-            title,
-            style: const TextStyle(fontSize: 20),
-          ),
-        ],
+        ),
       ),
     );
   }
 
   @override
-  Size get preferredSize => const Size(0, 55);
+  Size get preferredSize => const Size.fromHeight(50);
 }

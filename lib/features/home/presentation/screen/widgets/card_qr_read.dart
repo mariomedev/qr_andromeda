@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../../../core/core.dart';
 import 'widgets.dart';
@@ -15,7 +16,6 @@ class CardQrRead extends StatelessWidget {
           'Example of a simple mobile scanner instance without defining '
           'a controller.',
       page: const QrImpl(),
-      icon: Icons.qr_code_scanner,
     );
   }
 }
@@ -26,14 +26,12 @@ class _BuildItem extends StatelessWidget {
     required this.label,
     required this.subtitle,
     required this.page,
-    required this.icon,
   });
 
   final BuildContext context;
   final String label;
   final String subtitle;
   final Widget page;
-  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -52,19 +50,25 @@ class _BuildItem extends StatelessWidget {
           AppDimensions.kMargin30,
           0,
         ),
-
         child: Card(
           elevation: 5,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
-
           child: Padding(
             padding: const EdgeInsets.all(AppDimensions.kBorderRadius6),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Icon(icon, size: 40, color: colors.primary),
-                const SizedBox(width: 20),
+                const SizedBox(width: AppDimensions.kSpacing10),
+                SvgPicture.asset(
+                  AppAssets.qrNavigatorBar,
+                  colorFilter: ColorFilter.mode(
+                    colors.primary,
+                    BlendMode.srcIn,
+                  ),
+                ),
+                const SizedBox(width: AppDimensions.kSpacing20),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,7 +91,8 @@ class _BuildItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Icon(Icons.arrow_forward_ios, color: Colors.grey),
+                Icon(Icons.arrow_forward_ios, color: colors.primary),
+                const SizedBox(width: AppDimensions.kSpacing5),
               ],
             ),
           ),

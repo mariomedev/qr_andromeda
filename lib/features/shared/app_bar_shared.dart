@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/core.dart';
@@ -30,7 +31,10 @@ class AppBarShared extends StatelessWidget implements PreferredSizeWidget {
             onPressed: () {
               context.push('/settings');
             },
-            child: const Icon(Icons.menu_open_sharp),
+            child: SvgPicture.asset(
+              AppAssets.settings,
+              colorFilter: ColorFilter.mode(colors.primary, BlendMode.srcIn),
+            ),
           ),
         ),
       ],

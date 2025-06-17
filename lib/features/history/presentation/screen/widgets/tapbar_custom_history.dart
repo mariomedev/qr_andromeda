@@ -25,6 +25,15 @@ class TapbarCustomHistory extends StatelessWidget
         borderRadius: BorderRadius.circular(
           AppDimensions.kBorderRadius6,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: colors.brightness == Brightness.light
+                ? Colors.black.withValues(alpha: 0.2)
+                : Colors.transparent,
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: TabBar(
         indicatorSize: TabBarIndicatorSize.tab,
@@ -33,14 +42,7 @@ class TapbarCustomHistory extends StatelessWidget
         padding: const EdgeInsets.symmetric(horizontal: 10),
         indicator: BoxDecoration(
           shape: BoxShape.rectangle,
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              colors.primary,
-              const Color(0xff333333),
-            ],
-          ),
+          color: colors.primary,
           borderRadius: BorderRadius.circular(
             AppDimensions.kBorderRadius6,
           ),

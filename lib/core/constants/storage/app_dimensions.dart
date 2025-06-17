@@ -18,5 +18,6 @@ class AppDimensions {
 
   static const double kSpacing5 = 5.0;
   static const double kSpacing10 = 10.0;
+  static const double kSpacing20 = 20.0;
   static const double kSpacing30 = 30.0;
 }
