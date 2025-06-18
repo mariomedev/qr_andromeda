@@ -7,16 +7,20 @@ part 'qr_entity.g.dart';
 class QREntity {
   Id id = Isar.autoIncrement;
   final String data;
+  final String type;
+  final bool isFromScan;
   late int colorValue;
   late int zone;
   DateTime? createdAt;
-  DateTime? updateAt;
+  DateTime? updated;
 
   QREntity({
     required this.data,
+    required this.isFromScan,
+    required this.type,
     this.zone = 0,
     this.colorValue = 0,
-    this.updateAt,
+    this.updated,
     this.createdAt,
   });
 

@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 
+import '../../features/open_show_qr/domain/domain.dart';
 import '../../features/screens.dart';
 
 final GoRouter goRouter = GoRouter(
@@ -62,11 +63,11 @@ final GoRouter goRouter = GoRouter(
       ),
     ),
     GoRoute(
-      path: '/show_qr/:data',
+      path: '/show_qr',
       builder: (context, state) {
-        final data = state.pathParameters['data'];
+        final data = state.extra as QREntity;
         return ShowQrScreen(
-          data: data ?? '',
+          data: data,
         );
       },
     ),

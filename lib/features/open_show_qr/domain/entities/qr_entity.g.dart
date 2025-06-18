@@ -32,13 +32,23 @@ const QREntitySchema = CollectionSchema(
       name: r'data',
       type: IsarType.string,
     ),
-    r'updateAt': PropertySchema(
+    r'isFromScan': PropertySchema(
       id: 3,
-      name: r'updateAt',
+      name: r'isFromScan',
+      type: IsarType.bool,
+    ),
+    r'type': PropertySchema(
+      id: 4,
+      name: r'type',
+      type: IsarType.string,
+    ),
+    r'updated': PropertySchema(
+      id: 5,
+      name: r'updated',
       type: IsarType.dateTime,
     ),
     r'zone': PropertySchema(
-      id: 4,
+      id: 6,
       name: r'zone',
       type: IsarType.long,
     )
@@ -64,6 +74,7 @@ int _qREntityEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.data.length * 3;
+  bytesCount += 3 + object.type.length * 3;
   return bytesCount;
 }
 
@@ -76,8 +87,10 @@ void _qREntitySerialize(
   writer.writeLong(offsets[0], object.colorValue);
   writer.writeDateTime(offsets[1], object.createdAt);
   writer.writeString(offsets[2], object.data);
-  writer.writeDateTime(offsets[3], object.updateAt);
-  writer.writeLong(offsets[4], object.zone);
+  writer.writeBool(offsets[3], object.isFromScan);
+  writer.writeString(offsets[4], object.type);
+  writer.writeDateTime(offsets[5], object.updated);
+  writer.writeLong(offsets[6], object.zone);
 }
 
 QREntity _qREntityDeserialize(
@@ -90,8 +103,10 @@ QREntity _qREntityDeserialize(
     colorValue: reader.readLongOrNull(offsets[0]) ?? 0,
     createdAt: reader.readDateTimeOrNull(offsets[1]),
     data: reader.readString(offsets[2]),
-    updateAt: reader.readDateTimeOrNull(offsets[3]),
-    zone: reader.readLongOrNull(offsets[4]) ?? 0,
+    isFromScan: reader.readBool(offsets[3]),
+    type: reader.readString(offsets[4]),
+    updated: reader.readDateTimeOrNull(offsets[5]),
+    zone: reader.readLongOrNull(offsets[6]) ?? 0,
   );
   object.id = id;
   return object;
@@ -111,8 +126,12 @@ P _qREntityDeserializeProp<P>(
     case 2:
       return (reader.readString(offset)) as P;
     case 3:
-      return (reader.readDateTimeOrNull(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 4:
+      return (reader.readString(offset)) as P;
+    case 5:
+      return (reader.readDateTimeOrNull(offset)) as P;
+    case 6:
       return (reader.readLongOrNull(offset) ?? 0) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -512,59 +531,199 @@ extension QREntityQueryFilter
     });
   }
 
-  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> updateAtIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'updateAt',
-      ));
-    });
-  }
-
-  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> updateAtIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'updateAt',
-      ));
-    });
-  }
-
-  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> updateAtEqualTo(
-      DateTime? value) {
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> isFromScanEqualTo(
+      bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'updateAt',
+        property: r'isFromScan',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> updateAtGreaterThan(
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> typeEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'type',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> typeGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'type',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> typeLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'type',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> typeBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'type',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> typeStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'type',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> typeEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'type',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> typeContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'type',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> typeMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'type',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> typeIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'type',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> typeIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'type',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> updatedIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'updated',
+      ));
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> updatedIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'updated',
+      ));
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> updatedEqualTo(
+      DateTime? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'updated',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> updatedGreaterThan(
     DateTime? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'updateAt',
+        property: r'updated',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> updateAtLessThan(
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> updatedLessThan(
     DateTime? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'updateAt',
+        property: r'updated',
         value: value,
       ));
     });
   }
 
-  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> updateAtBetween(
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> updatedBetween(
     DateTime? lower,
     DateTime? upper, {
     bool includeLower = true,
@@ -572,7 +731,7 @@ extension QREntityQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'updateAt',
+        property: r'updated',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -678,15 +837,39 @@ extension QREntityQuerySortBy on QueryBuilder<QREntity, QREntity, QSortBy> {
     });
   }
 
-  QueryBuilder<QREntity, QREntity, QAfterSortBy> sortByUpdateAt() {
+  QueryBuilder<QREntity, QREntity, QAfterSortBy> sortByIsFromScan() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'updateAt', Sort.asc);
+      return query.addSortBy(r'isFromScan', Sort.asc);
     });
   }
 
-  QueryBuilder<QREntity, QREntity, QAfterSortBy> sortByUpdateAtDesc() {
+  QueryBuilder<QREntity, QREntity, QAfterSortBy> sortByIsFromScanDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'updateAt', Sort.desc);
+      return query.addSortBy(r'isFromScan', Sort.desc);
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterSortBy> sortByType() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'type', Sort.asc);
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterSortBy> sortByTypeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'type', Sort.desc);
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterSortBy> sortByUpdated() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'updated', Sort.asc);
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterSortBy> sortByUpdatedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'updated', Sort.desc);
     });
   }
 
@@ -753,15 +936,39 @@ extension QREntityQuerySortThenBy
     });
   }
 
-  QueryBuilder<QREntity, QREntity, QAfterSortBy> thenByUpdateAt() {
+  QueryBuilder<QREntity, QREntity, QAfterSortBy> thenByIsFromScan() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'updateAt', Sort.asc);
+      return query.addSortBy(r'isFromScan', Sort.asc);
     });
   }
 
-  QueryBuilder<QREntity, QREntity, QAfterSortBy> thenByUpdateAtDesc() {
+  QueryBuilder<QREntity, QREntity, QAfterSortBy> thenByIsFromScanDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'updateAt', Sort.desc);
+      return query.addSortBy(r'isFromScan', Sort.desc);
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterSortBy> thenByType() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'type', Sort.asc);
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterSortBy> thenByTypeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'type', Sort.desc);
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterSortBy> thenByUpdated() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'updated', Sort.asc);
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterSortBy> thenByUpdatedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'updated', Sort.desc);
     });
   }
 
@@ -799,9 +1006,22 @@ extension QREntityQueryWhereDistinct
     });
   }
 
-  QueryBuilder<QREntity, QREntity, QDistinct> distinctByUpdateAt() {
+  QueryBuilder<QREntity, QREntity, QDistinct> distinctByIsFromScan() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'updateAt');
+      return query.addDistinctBy(r'isFromScan');
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QDistinct> distinctByType(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'type', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QDistinct> distinctByUpdated() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'updated');
     });
   }
 
@@ -838,9 +1058,21 @@ extension QREntityQueryProperty
     });
   }
 
-  QueryBuilder<QREntity, DateTime?, QQueryOperations> updateAtProperty() {
+  QueryBuilder<QREntity, bool, QQueryOperations> isFromScanProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'updateAt');
+      return query.addPropertyName(r'isFromScan');
+    });
+  }
+
+  QueryBuilder<QREntity, String, QQueryOperations> typeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'type');
+    });
+  }
+
+  QueryBuilder<QREntity, DateTime?, QQueryOperations> updatedProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'updated');
     });
   }
 

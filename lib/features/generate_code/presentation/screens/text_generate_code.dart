@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:qr_andromeda/features/open_show_qr/domain/entities/qr_entity.dart';
 
 import '../../../../core/core.dart';
 import '../../../shared/shared.dart';
@@ -33,7 +34,15 @@ class _TextGenerateCodeState extends State<TextGenerateCode> {
           ),
         ],
         onPressed: () {
-          context.push('/show_qr/${controller.text}');
+          final qr = QREntity(
+            data: controller.value.text,
+            isFromScan: false,
+            type: 'TEXT',
+          );
+          context.push(
+            '/show_qr',
+            extra: qr,
+          );
         },
       ),
     );
