@@ -94,8 +94,10 @@ class _QrViewShowState extends ConsumerState<QrViewShow> {
 
     final newQr = QREntity(
       data: widget.qr.data,
-      updateAt: DateTime.now(),
+      updated: DateTime.now(),
       createdAt: isNew ? DateTime.now() : widget.qr.createdAt,
+      type: widget.qr.type,
+      isFromScan: widget.qr.isFromScan,
     )..color = shapeColor;
 
     if (isNew) {

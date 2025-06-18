@@ -15,32 +15,37 @@ class AppBarCodeGenerate extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      child: AppBar(
-        title: Text(title),
-        leading: Container(
-          margin: const EdgeInsets.all(5),
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              minimumSize: const Size(40, 40),
-              backgroundColor: colors.onPrimaryContainer,
-              padding: EdgeInsets.zero,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(
-                  AppDimensions.kBorderRadius6,
+    return AppBar(
+      title: Text(title),
+      leadingWidth: 70,
+      leading: Row(
+        children: [
+          const SizedBox(
+            width: AppDimensions.kMargin10,
+          ),
+          Container(
+            margin: const EdgeInsets.all(5),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(40, 40),
+                backgroundColor: colors.onPrimaryContainer,
+                padding: EdgeInsets.zero,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                    AppDimensions.kBorderRadius6,
+                  ),
                 ),
               ),
-            ),
-            onPressed: () {
-              context.pop();
-            },
-            child: SvgPicture.asset(
-              AppAssets.arrowBigLeftLines,
-              colorFilter: ColorFilter.mode(colors.primary, BlendMode.srcIn),
+              onPressed: () {
+                context.pop();
+              },
+              child: SvgPicture.asset(
+                AppAssets.arrowBigLeftLines,
+                colorFilter: ColorFilter.mode(colors.primary, BlendMode.srcIn),
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

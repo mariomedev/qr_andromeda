@@ -4,10 +4,12 @@ import '../../../../../../core/core.dart';
 
 class CardCustomShow extends StatelessWidget {
   final String data;
+  final String type;
 
   const CardCustomShow({
     super.key,
     required this.data,
+    required this.type,
   });
 
   @override
@@ -32,9 +34,9 @@ class CardCustomShow extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Data',
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          Text(
+            type,
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
           Text(
             data,

@@ -20,9 +20,7 @@ class CardCustomOpen extends ConsumerStatefulWidget {
 }
 
 class _CardCustomOpenState extends ConsumerState<CardCustomOpen> {
-  QREntity qrData = QREntity(
-    data: 'Loading...',
-  );
+  QREntity qrData = QREntity(data: 'Loading...', isFromScan: false, type: '');
   _getQrData() async {
     final data = await ref.read(qrProvider).getQrById(id: widget.id);
 
@@ -47,7 +45,7 @@ class _CardCustomOpenState extends ConsumerState<CardCustomOpen> {
     ).format(qrData.createdAt ?? DateTime.now());
     final updateAtformatted = DateFormat(
       'dd/MM/yyyy – HH:mm',
-    ).format(qrData.updateAt ?? DateTime.now());
+    ).format(qrData.updated ?? DateTime.now());
     return Container(
       decoration: BoxDecoration(
         color: colors.onPrimaryContainer,

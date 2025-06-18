@@ -6,7 +6,7 @@ import '../../../../shared/shared.dart';
 import 'widgets/widgets.dart';
 
 class ShowQrScreen extends StatelessWidget {
-  final String data;
+  final QREntity data;
   const ShowQrScreen({super.key, required this.data});
 
   @override
@@ -17,10 +17,11 @@ class ShowQrScreen extends StatelessWidget {
         child: Column(
           children: [
             CardCustomShow(
-              data: data,
+              data: data.data,
+              type: data.type,
             ),
             QrViewShow(
-              qr: QREntity(data: data),
+              qr: data,
             ),
             const SizedBox(height: AppDimensions.kMargin30),
           ],
