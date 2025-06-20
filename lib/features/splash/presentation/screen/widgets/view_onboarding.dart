@@ -16,40 +16,47 @@ class ViewOnboarding extends StatelessWidget {
       spacing: AppDimensions.kSpacing30,
       children: [
         SizedBox(
-          height: size.height * 0.3,
+          height: size.height * 0.2,
           width: double.infinity,
           child: CustomPaint(
             painter: _Painter(color: colors),
           ),
         ),
-
         SizedBox(
-          width: MediaQuery.of(context).size.width * 0.5,
+          height: size.height * 0.2,
           child: Image.asset(
             AppAssets.iconQrAndromeda,
           ),
         ),
-        const Spacer(),
-        const Text(
-          'Get Started',
-          style: TextStyle(
-            fontSize: 42,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: AppDimensions.kPadding30,
-          ),
-          child: Text(
-            'Go and enjoy our features for free and make your life easy with us.',
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.black,
+        SizedBox(
+          height: size.height * 0.1,
+          child: const FittedBox(
+            child: Text(
+              'Get Started',
+              style: TextStyle(
+                fontSize: 42,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
             ),
           ),
         ),
+        SizedBox(
+          height: size.height * 0.1,
+          child: const Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: AppDimensions.kPadding30,
+            ),
+            child: Text(
+              'Go and enjoy our features for free and make your life easy with us.',
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ),
+        const Spacer(),
+
         const BottomOnboarding(),
       ],
     );

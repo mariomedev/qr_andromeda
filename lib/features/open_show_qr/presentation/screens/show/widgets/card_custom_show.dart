@@ -22,6 +22,15 @@ class CardCustomShow extends StatelessWidget {
         borderRadius: BorderRadius.circular(
           AppDimensions.kBorderRadius6,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: colors.brightness == Brightness.light
+                ? Colors.black.withValues(alpha: 0.2)
+                : Colors.transparent,
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       margin: const EdgeInsets.symmetric(
         horizontal: AppDimensions.kMargin20,
@@ -31,6 +40,7 @@ class CardCustomShow extends StatelessWidget {
         horizontal: AppDimensions.kPadding20,
         vertical: AppDimensions.kPadding20,
       ),
+
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

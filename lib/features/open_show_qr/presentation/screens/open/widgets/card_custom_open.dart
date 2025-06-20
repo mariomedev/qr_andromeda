@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:qr_andromeda/features/open_show_qr/domain/entities/qr_entity.dart';
-import 'package:qr_andromeda/features/open_show_qr/presentation/provider/qr_data/qr_provider.dart';
 
 import '../../../../../../core/core.dart';
+import '../../../../domain/domain.dart';
+import '../../../provider/providers.dart';
 
 class CardCustomOpen extends ConsumerStatefulWidget {
   final int id;

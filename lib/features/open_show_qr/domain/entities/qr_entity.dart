@@ -22,10 +22,21 @@ class QREntity {
     this.colorValue = 0,
     this.updated,
     this.createdAt,
-  });
+  }) {
+    createdAt = createdAt ?? DateTime.now();
+    updated = updated ?? DateTime.now();
+  }
 
   @ignore
   Color get color => Color(colorValue);
 
   set color(Color c) => colorValue = c.toARGB32();
+
+  @override
+  String toString() =>
+      '''
+    id: $id
+    data: $data
+    isFromScan: $isFromScan
+  ''';
 }

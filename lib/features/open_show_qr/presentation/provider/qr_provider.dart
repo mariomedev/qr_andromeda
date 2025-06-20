@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../domain/domain.dart';
+import '../../domain/domain.dart';
 import 'qr_repository.dart';
 
 final qrProvider = Provider<QrNotifier>((ref) {
