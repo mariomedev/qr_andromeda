@@ -16,7 +16,7 @@ class HomeScreen extends ConsumerWidget {
         const QrImpl(),
         const SafeArea(
           child: Scaffold(
-            appBar: AppBarHome(),
+            //appBar: AppBarHome(),
             bottomNavigationBar: NavigationBarShared(),
             floatingActionButton: FloatingActionButtonShared(),
             floatingActionButtonLocation:

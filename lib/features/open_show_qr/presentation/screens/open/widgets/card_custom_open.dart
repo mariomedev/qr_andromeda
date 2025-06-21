@@ -21,16 +21,7 @@ class CardCustomOpen extends ConsumerStatefulWidget {
 }
 
 class _CardCustomOpenState extends ConsumerState<CardCustomOpen> {
-  QREntity qrData = QREntity(data: 'Loading...', isFromScan: false, type: '');
-  _getQrData() async {
-    final data = await ref.read(qrProvider).getQrById(id: widget.id);
-
-    if (data != null) {
-      setState(() {
-        qrData = data;
-      });
-    }
-  }
+  QREntity? data;
 
   @override
   void initState() {
@@ -38,71 +29,106 @@ class _CardCustomOpenState extends ConsumerState<CardCustomOpen> {
     super.initState();
   }
 
+  Future<void> _getQrData() async {
+    final result = await ref.read(qrProvider).getQrById(id: widget.id);
+    setState(() {
+      data = result;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    final createdAtformatted = DateFormat(
-      'dd/MM/yyyy – HH:mm',
-    ).format(qrData.createdAt ?? DateTime.now());
-    final updateAtformatted = DateFormat(
-      'dd/MM/yyyy – HH:mm',
-    ).format(qrData.updated ?? DateTime.now());
-    return Container(
-      decoration: BoxDecoration(
-        color: colors.onPrimaryContainer,
-        borderRadius: BorderRadius.circular(
-          AppDimensions.kBorderRadius6,
+
+    if (data != null) {
+      final formattedCreatedAt = DateFormat(
+        'dd/MM/yyyy – HH:mm',
+      ).format(data!.createdAt ?? DateTime.now());
+      final formattedUpdatedAt = DateFormat(
+        'dd/MM/yyyy – HH:mm',
+      ).format(data!.updated ?? DateTime.now());
+      return Container(
+        decoration: BoxDecoration(
+          color: colors.onPrimaryContainer,
+          borderRadius: BorderRadius.circular(
+            AppDimensions.kBorderRadius6,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: colors.shadow.withValues(alpha: 0.2),
+              blurRadius: 10,
+              offset: const Offset(5, 5),
+            ),
+          ],
         ),
-      ),
-      margin: const EdgeInsets.symmetric(
-        horizontal: AppDimensions.kMargin20,
-      ),
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppDimensions.kPadding30,
-        vertical: AppDimensions.kPadding20,
-      ),
-      child: Column(
-        spacing: AppDimensions.kSpacing10,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            spacing: AppDimensions.kSpacing30,
-            children: [
-              SvgPicture.asset(
-                AppAssets.qrScan,
-                colorFilter: ColorFilter.mode(
-                  colors.primary,
-                  BlendMode.srcIn,
+        margin: const EdgeInsets.symmetric(
+          horizontal: AppDimensions.kMargin20,
+        ),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppDimensions.kPadding30,
+          vertical: AppDimensions.kPadding20,
+        ),
+        child: Column(
+          spacing: AppDimensions.kSpacing10,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              spacing: AppDimensions.kSpacing30,
+              children: [
+                SvgPicture.asset(
+                  AppAssets.qrScan,
+                  colorFilter: ColorFilter.mode(
+                    colors.primary,
+                    BlendMode.srcIn,
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: AppDimensions.kSpacing5,
+                  children: [
+                    Text('Date created: $formattedCreatedAt'),
+                    Text('Last modification: $formattedUpdatedAt'),
+                  ],
+                ),
+              ],
+            ),
+            const Divider(),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                data!.data,
+                style: const TextStyle(
+                  fontSize: 18,
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: AppDimensions.kSpacing5,
-                children: [
-                  Text('createdAt: $createdAtformatted'),
-                  Text('updateAt: $updateAtformatted'),
-                ],
-              ),
-            ],
-          ),
-          const Divider(),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(qrData.data),
-          ),
-          TextButton(
-            onPressed: () {
-              context.push('/show_qr/${widget.id}');
-            },
-            child: Text(
-              'Show QR Code',
-              style: TextStyle(
-                color: colors.primary,
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                data!.type,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          ),
-        ],
-      ),
+            TextButton(
+              onPressed: () {
+                context.push('/show_qr', extra: data);
+              },
+              child: Text(
+                'Show QR Code',
+                style: TextStyle(
+                  color: colors.primary,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+    return const Center(
+      child: CircularProgressIndicator(),
     );
   }
 }

@@ -57,10 +57,14 @@ final GoRouter goRouter = GoRouter(
       builder: (context, state) => const SettingsScreen(),
     ),
     GoRoute(
-      path: '/open_file',
-      builder: (context, state) => const OpenFileQrScreen(
-        id: 3,
-      ),
+      path: '/open_file/:id',
+      builder: (context, state) {
+        final result = state.pathParameters['id'];
+        final id = int.parse(result ?? '0');
+        return OpenFileQrScreen(
+          id: id,
+        );
+      },
     ),
     GoRoute(
       path: '/show_qr',

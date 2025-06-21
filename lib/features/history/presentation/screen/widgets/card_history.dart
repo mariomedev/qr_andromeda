@@ -95,7 +95,7 @@ class _CardHistoryState extends ConsumerState<CardHistory>
         key: _cardKey,
         color: colors.onPrimaryContainer,
         child: ListTile(
-          onTap: () => context.push('/show_qr', extra: widget.qr),
+          onTap: () => context.push('/open_file/${widget.qr.id}'),
           leading: Icon(
             Icons.arrow_forward_ios_rounded,
             color: colors.primary,
