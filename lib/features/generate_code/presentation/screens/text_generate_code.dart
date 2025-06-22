@@ -12,6 +12,7 @@ class TextGenerateCode extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(qrInputProvider);
+    final controller = ref.read(qrInputProvider.notifier);
     return Scaffold(
       appBar: const AppBarCodeGenerate(
         title: AppText.textTitle,
@@ -22,17 +23,14 @@ class TextGenerateCode extends ConsumerWidget {
         children: [
           TextFieldCodeGenerate(
             title: AppText.textTitle,
-            onChanged: (value) {
-              ref
-                  .watch(qrInputProvider.notifier)
-                  .textQrInputChanged(value: value);
-            },
-            errorText: state.hasSubmitted ? null : state.errorMessage,
+            onChanged: (value) => controller.onTextInputChanged(value: value),
+            errorText: state.hasSubmitted ? state.errorMessage : null,
           ),
         ],
-        onPressed: () {
-          ref.read(qrInputProvider.notifier).sendData(context: context);
-        },
+        onPressed: () => controller.submitQrForm(
+          context: context,
+          type: AppText.textType,
+        ),
       ),
     );
   }

@@ -5,25 +5,26 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/core.dart';
 import '../../../open_show_qr/domain/domain.dart';
 
-final qrInputProvider = StateNotifierProvider<QrInputNotifier, QrInputState>((
-  ref,
-) {
-  return QrInputNotifier();
-});
+final qrInputWebProvider =
+    StateNotifierProvider<QrInputWebNotifier, QrInputWebState>((
+      ref,
+    ) {
+      return QrInputWebNotifier();
+    });
 
-class QrInputNotifier extends StateNotifier<QrInputState> {
-  QrInputNotifier() : super(QrInputState());
+class QrInputWebNotifier extends StateNotifier<QrInputWebState> {
+  QrInputWebNotifier() : super(QrInputWebState());
 
-  void onTextInputChanged({
+  void onWebInputChanged({
     required String value,
   }) {
-    final input = EmptyInput.dirty(value: value);
-    final isValid = input.isValid;
+    final newWeb = WebInput.dirty(value: value);
+    final isValid = newWeb.isValid;
 
     state = state.copyWith(
-      input: input,
+      web: newWeb,
       isValid: isValid,
-      errorMessage: input.errorMessage,
+      errorMessage: newWeb.errorMessage,
     );
   }
 
@@ -35,7 +36,7 @@ class QrInputNotifier extends StateNotifier<QrInputState> {
     final colors = Theme.of(context).colorScheme;
     if (state.isValid) {
       final qr = QREntity(
-        data: state.input.value,
+        data: state.web.value,
         isFromScan: false,
         type: type,
       );
@@ -55,28 +56,27 @@ class QrInputNotifier extends StateNotifier<QrInputState> {
   }
 }
 
-class QrInputState {
-  final EmptyInput input;
+class QrInputWebState {
+  final WebInput web;
   final String? errorMessage;
   final bool isValid;
   final bool hasSubmitted;
 
-  QrInputState({
-    this.input = const EmptyInput.pure(),
+  QrInputWebState({
+    this.web = const WebInput.pure(),
     this.errorMessage,
     this.isValid = false,
     this.hasSubmitted = false,
   });
 
-  QrInputState copyWith({
-    EmptyInput? input,
-    EmailInput? emailInput,
+  QrInputWebState copyWith({
+    WebInput? web,
     String? errorMessage,
     bool? isValid,
     bool? hasSubmitted,
   }) {
-    return QrInputState(
-      input: input ?? this.input,
+    return QrInputWebState(
+      web: web ?? this.web,
       errorMessage: errorMessage ?? this.errorMessage,
       isValid: isValid ?? this.isValid,
       hasSubmitted: hasSubmitted ?? this.hasSubmitted,
@@ -87,7 +87,7 @@ class QrInputState {
   String toString() =>
       '''
       QrInputState(
-      input: $input, 
+      input: $web, 
       errorMessage: $errorMessage, 
       isValid: $isValid, 
       hasSubmitted: $hasSubmitted

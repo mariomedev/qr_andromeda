@@ -1,29 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:formz/formz.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/core.dart';
 import '../../../open_show_qr/domain/domain.dart';
 
-final qrInputProvider = StateNotifierProvider<QrInputNotifier, QrInputState>((
-  ref,
-) {
-  return QrInputNotifier();
-});
+final qrInputWifiProvider =
+    StateNotifierProvider<QrInputWifiNotifier, QrInputWifiState>((
+      ref,
+    ) {
+      return QrInputWifiNotifier();
+    });
 
-class QrInputNotifier extends StateNotifier<QrInputState> {
-  QrInputNotifier() : super(QrInputState());
+class QrInputWifiNotifier extends StateNotifier<QrInputWifiState> {
+  QrInputWifiNotifier() : super(QrInputWifiState());
 
-  void onTextInputChanged({
+  void onWifiInputChanged({
     required String value,
   }) {
-    final input = EmptyInput.dirty(value: value);
-    final isValid = input.isValid;
+    final newWifi = EmptyInput.dirty(value: value);
 
     state = state.copyWith(
-      input: input,
-      isValid: isValid,
-      errorMessage: input.errorMessage,
+      wifi: newWifi,
+      isValid: Formz.validate([newWifi, state.password]),
+      errorMessage: newWifi.errorMessage,
+    );
+  }
+
+  void onPasswordInputChanged({
+    required String value,
+  }) {
+    final newPassword = EmptyInput.dirty(value: value);
+
+    state = state.copyWith(
+      password: newPassword,
+      isValid: Formz.validate([newPassword, state.wifi]),
+      errorMessage: newPassword.errorMessage,
     );
   }
 
@@ -35,7 +48,7 @@ class QrInputNotifier extends StateNotifier<QrInputState> {
     final colors = Theme.of(context).colorScheme;
     if (state.isValid) {
       final qr = QREntity(
-        data: state.input.value,
+        data: '${state.wifi.value} ${state.password.value}',
         isFromScan: false,
         type: type,
       );
@@ -55,28 +68,31 @@ class QrInputNotifier extends StateNotifier<QrInputState> {
   }
 }
 
-class QrInputState {
-  final EmptyInput input;
+class QrInputWifiState {
+  final EmptyInput wifi;
+  final EmptyInput password;
   final String? errorMessage;
   final bool isValid;
   final bool hasSubmitted;
 
-  QrInputState({
-    this.input = const EmptyInput.pure(),
+  QrInputWifiState({
+    this.wifi = const EmptyInput.pure(),
+    this.password = const EmptyInput.pure(),
     this.errorMessage,
     this.isValid = false,
     this.hasSubmitted = false,
   });
 
-  QrInputState copyWith({
-    EmptyInput? input,
-    EmailInput? emailInput,
+  QrInputWifiState copyWith({
+    EmptyInput? wifi,
+    EmptyInput? password,
     String? errorMessage,
     bool? isValid,
     bool? hasSubmitted,
   }) {
-    return QrInputState(
-      input: input ?? this.input,
+    return QrInputWifiState(
+      wifi: wifi ?? this.wifi,
+      password: password ?? this.password,
       errorMessage: errorMessage ?? this.errorMessage,
       isValid: isValid ?? this.isValid,
       hasSubmitted: hasSubmitted ?? this.hasSubmitted,
@@ -87,7 +103,6 @@ class QrInputState {
   String toString() =>
       '''
       QrInputState(
-      input: $input, 
       errorMessage: $errorMessage, 
       isValid: $isValid, 
       hasSubmitted: $hasSubmitted
