@@ -5,6 +5,7 @@ import '../../../../../core/core.dart';
 class TextFieldCodeGenerate extends StatelessWidget {
   final int? maxLines;
   final String title;
+  final String? errorText;
   final void Function(String)? onChanged;
 
   const TextFieldCodeGenerate({
@@ -12,6 +13,7 @@ class TextFieldCodeGenerate extends StatelessWidget {
     this.onChanged,
     required this.title,
     this.maxLines,
+    this.errorText,
   });
 
   @override
@@ -43,7 +45,9 @@ class TextFieldCodeGenerate extends StatelessWidget {
               contentPadding: const EdgeInsets.all(
                 AppDimensions.kPadding5,
               ),
+              errorText: errorText,
             ),
+
             onChanged: onChanged,
           ),
         ],
