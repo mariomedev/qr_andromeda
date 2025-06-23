@@ -15,14 +15,14 @@ class TwitterGenerateCode extends ConsumerWidget {
     final controller = ref.read(qrInputTwitterProvider.notifier);
     return Scaffold(
       appBar: const AppBarCodeGenerate(
-        title: AppText.textTitle,
+        title: AppText.textTwitter,
       ),
       body: BoxCodeGenerate(
-        title: AppText.textTitle,
-        iconSvg: AppAssets.textIcon,
+        title: AppText.textTwitter,
+        iconSvg: AppAssets.twitterIcon,
         children: [
           TextFieldCodeGenerate(
-            title: AppText.textTitle,
+            title: 'Twitter Username',
             onChanged: (value) =>
                 controller.onTwitterInputChanged(value: value),
             errorText: state.hasSubmitted ? state.errorMessage : null,
@@ -30,7 +30,7 @@ class TwitterGenerateCode extends ConsumerWidget {
         ],
         onPressed: () => controller.submitQrForm(
           context: context,
-          type: AppText.textType,
+          type: AppText.twitterType,
         ),
       ),
     );

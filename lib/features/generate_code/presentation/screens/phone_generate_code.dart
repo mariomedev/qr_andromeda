@@ -15,21 +15,21 @@ class PhoneGenerateCode extends ConsumerWidget {
     final controller = ref.read(qrInputPhoneProvider.notifier);
     return Scaffold(
       appBar: const AppBarCodeGenerate(
-        title: AppText.textTitle,
+        title: AppText.textPhone,
       ),
       body: BoxCodeGenerate(
-        title: AppText.textWhatsapp,
-        iconSvg: AppAssets.whatsAppIcon,
+        title: AppText.textPhone,
+        iconSvg: AppAssets.telephoneIcon,
         children: [
           TextFieldCodeGenerate(
-            title: AppText.textWhatsapp,
+            title: AppText.textPhone,
             onChanged: (value) => controller.onPhoneInputChanged(value: value),
             errorText: state.hasSubmitted ? state.errorMessage : null,
           ),
         ],
         onPressed: () => controller.submitQrForm(
           context: context,
-          type: AppText.whatsappType,
+          type: AppText.phoneType,
         ),
       ),
     );

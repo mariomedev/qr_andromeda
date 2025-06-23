@@ -15,14 +15,14 @@ class InstagramGenerateCode extends ConsumerWidget {
     final controller = ref.read(qrInputInstagramProvider.notifier);
     return Scaffold(
       appBar: const AppBarCodeGenerate(
-        title: AppText.textTitle,
+        title: AppText.textInstagram,
       ),
       body: BoxCodeGenerate(
-        title: AppText.textTitle,
-        iconSvg: AppAssets.textIcon,
+        title: AppText.textInstagram,
+        iconSvg: AppAssets.instagramIcon,
         children: [
           TextFieldCodeGenerate(
-            title: AppText.textTitle,
+            title: 'Instagram Username',
             onChanged: (value) =>
                 controller.onInstagramInputChanged(value: value),
             errorText: state.hasSubmitted ? state.errorMessage : null,
@@ -30,7 +30,7 @@ class InstagramGenerateCode extends ConsumerWidget {
         ],
         onPressed: () => controller.submitQrForm(
           context: context,
-          type: AppText.textType,
+          type: AppText.instagramType,
         ),
       ),
     );

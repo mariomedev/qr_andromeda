@@ -15,14 +15,14 @@ class EmailGenerateCode extends ConsumerWidget {
     final controller = ref.read(qrInputEmailProvider.notifier);
     return Scaffold(
       appBar: const AppBarCodeGenerate(
-        title: AppText.textTitle,
+        title: AppText.textemail,
       ),
       body: BoxCodeGenerate(
-        title: AppText.textWhatsapp,
-        iconSvg: AppAssets.whatsAppIcon,
+        title: AppText.textemail,
+        iconSvg: AppAssets.emailIcon,
         children: [
           TextFieldCodeGenerate(
-            title: AppText.textWhatsapp,
+            title: AppText.textemail,
             onChanged: (value) => controller.onEmailInputChanged(value: value),
             errorText: state.hasSubmitted ? state.errorMessage : null,
           ),
