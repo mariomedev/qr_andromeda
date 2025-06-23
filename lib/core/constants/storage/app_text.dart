@@ -13,4 +13,5 @@ class AppText {
   static const textType = 'TEXT';
   static const wifiType = 'WIFI';
   static const whatsappType = 'WHATSAPP';
+  static const emailType = 'EMAIL';
 }

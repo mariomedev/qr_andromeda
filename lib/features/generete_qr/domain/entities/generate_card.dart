@@ -55,7 +55,7 @@ List<GenerateCardEntity> itemsGeneraCard = [
   ),
   GenerateCardEntity(
     title: 'Email',
-    route: '/generate_qr/',
+    route: '/generate_qr/email',
     pathIcon: AppAssets.emailIcon,
   ),
   GenerateCardEntity(

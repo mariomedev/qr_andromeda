@@ -5,27 +5,26 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/core.dart';
 import '../../../open_show_qr/domain/domain.dart';
 
-final qrInputNumberPhoneProvider =
-    StateNotifierProvider<QrInputNumberPhoneNotifier, QrInputNumberPhoneState>((
+final qrInputEmailProvider =
+    StateNotifierProvider<QrInputEmailNotifier, QrInputEmailState>((
       ref,
     ) {
-      return QrInputNumberPhoneNotifier();
+      return QrInputEmailNotifier();
     });
 
-class QrInputNumberPhoneNotifier
-    extends StateNotifier<QrInputNumberPhoneState> {
-  QrInputNumberPhoneNotifier() : super(QrInputNumberPhoneState());
+class QrInputEmailNotifier extends StateNotifier<QrInputEmailState> {
+  QrInputEmailNotifier() : super(QrInputEmailState());
 
-  void onWhatsappInputChanged({
+  void onEmailInputChanged({
     required String value,
   }) {
-    final newphone = NumberInput.dirty(value: value);
-    final isValid = newphone.isValid;
+    final newEmail = EmailInput.dirty(value: value);
+    final isValid = newEmail.isValid;
 
     state = state.copyWith(
-      phone: newphone,
+      email: newEmail,
       isValid: isValid,
-      errorMessage: newphone.errorMessage,
+      errorMessage: newEmail.errorMessage,
     );
   }
 
@@ -40,7 +39,7 @@ class QrInputNumberPhoneNotifier
     final colors = Theme.of(context).colorScheme;
     if (state.isValid) {
       final qr = QREntity(
-        data: 'https://wa.me/${state.phone.value.replaceFirst(r'+', '')}',
+        data: state.email.value,
         isFromScan: false,
         type: type,
       );
@@ -60,27 +59,27 @@ class QrInputNumberPhoneNotifier
   }
 }
 
-class QrInputNumberPhoneState {
-  final NumberInput phone;
+class QrInputEmailState {
+  final EmailInput email;
   final String? errorMessage;
   final bool isValid;
   final bool hasSubmitted;
 
-  QrInputNumberPhoneState({
-    this.phone = const NumberInput.pure(),
+  QrInputEmailState({
+    this.email = const EmailInput.pure(),
     this.errorMessage,
     this.isValid = false,
     this.hasSubmitted = false,
   });
 
-  QrInputNumberPhoneState copyWith({
-    NumberInput? phone,
+  QrInputEmailState copyWith({
+    EmailInput? email,
     String? errorMessage,
     bool? isValid,
     bool? hasSubmitted,
   }) {
-    return QrInputNumberPhoneState(
-      phone: phone ?? this.phone,
+    return QrInputEmailState(
+      email: email ?? this.email,
       errorMessage: errorMessage,
       isValid: isValid ?? this.isValid,
       hasSubmitted: hasSubmitted ?? this.hasSubmitted,
@@ -91,7 +90,7 @@ class QrInputNumberPhoneState {
   String toString() =>
       '''
       QrInputState(
-      input: $phone, 
+      input: $email, 
       errorMessage: $errorMessage, 
       isValid: $isValid, 
       hasSubmitted: $hasSubmitted

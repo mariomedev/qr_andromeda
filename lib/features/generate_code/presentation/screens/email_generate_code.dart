@@ -6,13 +6,13 @@ import '../../../shared/shared.dart';
 import '../provider/provider.dart';
 import 'widgets/widgets.dart';
 
-class WhatsappGenerateCode extends ConsumerWidget {
-  const WhatsappGenerateCode({super.key});
+class EmailGenerateCode extends ConsumerWidget {
+  const EmailGenerateCode({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(qrInputNumberPhoneProvider);
-    final controller = ref.read(qrInputNumberPhoneProvider.notifier);
+    final state = ref.watch(qrInputEmailProvider);
+    final controller = ref.read(qrInputEmailProvider.notifier);
     return Scaffold(
       appBar: const AppBarCodeGenerate(
         title: AppText.textTitle,
@@ -23,14 +23,13 @@ class WhatsappGenerateCode extends ConsumerWidget {
         children: [
           TextFieldCodeGenerate(
             title: AppText.textWhatsapp,
-            onChanged: (value) =>
-                controller.onWhatsappInputChanged(value: value),
+            onChanged: (value) => controller.onEmailInputChanged(value: value),
             errorText: state.hasSubmitted ? state.errorMessage : null,
           ),
         ],
         onPressed: () => controller.submitQrForm(
           context: context,
-          type: AppText.whatsappType,
+          type: AppText.emailType,
         ),
       ),
     );

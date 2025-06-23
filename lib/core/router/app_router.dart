@@ -50,6 +50,10 @@ final GoRouter goRouter = GoRouter(
           path: '/whatsapp',
           builder: (context, state) => const WhatsappGenerateCode(),
         ),
+        GoRoute(
+          path: '/email',
+          builder: (context, state) => const EmailGenerateCode(),
+        ),
       ],
     ),
     GoRoute(
