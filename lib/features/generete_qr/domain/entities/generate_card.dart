@@ -59,9 +59,9 @@ List<GenerateCardEntity> itemsGeneraCard = [
     pathIcon: AppAssets.emailIcon,
   ),
   GenerateCardEntity(
-    title: 'Twitter',
-    route: '/generate_qr/twitter',
-    pathIcon: AppAssets.twitterIcon,
+    title: 'X',
+    route: '/generate_qr/x',
+    pathIcon: AppAssets.xIcon,
   ),
   GenerateCardEntity(
     title: 'Instagram',

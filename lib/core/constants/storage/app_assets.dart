@@ -20,7 +20,7 @@ class AppAssets {
   static String locationIcon = 'assets/svg/generate_qr_icons/location.svg';
   static String whatsAppIcon = 'assets/svg/generate_qr_icons/whatsapp.svg';
   static String emailIcon = 'assets/svg/generate_qr_icons/email.svg';
-  static String twitterIcon = 'assets/svg/generate_qr_icons/twitter.svg';
+  static String xIcon = 'assets/svg/generate_qr_icons/x.svg';
   static String instagramIcon = 'assets/svg/generate_qr_icons/instagram.svg';
   static String telephoneIcon = 'assets/svg/generate_qr_icons/telephone.svg';
 

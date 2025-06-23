@@ -15,7 +15,7 @@ final qrInputTwitterProvider =
 class QrInputTwitterNotifier extends StateNotifier<QrInputTwitterState> {
   QrInputTwitterNotifier() : super(QrInputTwitterState());
 
-  void onTwitterInputChanged({
+  void onXInputChanged({
     required String value,
   }) {
     final newUserName = EmptyInput.dirty(value: value);
@@ -39,7 +39,7 @@ class QrInputTwitterNotifier extends StateNotifier<QrInputTwitterState> {
     final colors = Theme.of(context).colorScheme;
     if (state.isValid) {
       final qr = QREntity(
-        data: 'https://twitter.com/${state.userName.value}',
+        data: 'https://x.com/${state.userName.value}',
         isFromScan: false,
         type: type,
       );

@@ -22,7 +22,7 @@ export 'generate_code/presentation/screens/contact_generate_code.dart';
 export 'generate_code/presentation/screens/business_generate_code.dart';
 export 'generate_code/presentation/screens/whatsapp_generate_code.dart';
 export 'generate_code/presentation/screens/email_generate_code.dart';
-export 'generate_code/presentation/screens/twitter_generate_code.dart';
+export 'generate_code/presentation/screens/x_generate_code.dart';
 export 'generate_code/presentation/screens/instagram_generate_code.dart';
 export 'generate_code/presentation/screens/phone_generate_code.dart';
 

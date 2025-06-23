@@ -10,7 +10,7 @@ class AppText {
   static const textBusiness = 'Business';
   static const textInstagram = 'Instagram';
   static const textWhatsapp = 'WhatsApp';
-  static const textTwitter = 'Twitter';
+  static const textX = 'X';
   static const textPhone = 'phone';
 
   static const urlType = 'URL';
@@ -20,5 +20,5 @@ class AppText {
   static const emailType = 'EMAIL';
   static const phoneType = 'PHONE';
   static const instagramType = 'INSTAGRAM';
-  static const twitterType = 'TWITTER';
+  static const xType = 'X';
 }

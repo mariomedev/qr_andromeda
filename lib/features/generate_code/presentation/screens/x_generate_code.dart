@@ -6,8 +6,8 @@ import '../../../shared/shared.dart';
 import '../provider/provider.dart';
 import 'widgets/widgets.dart';
 
-class TwitterGenerateCode extends ConsumerWidget {
-  const TwitterGenerateCode({super.key});
+class XGenerateCode extends ConsumerWidget {
+  const XGenerateCode({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -15,22 +15,21 @@ class TwitterGenerateCode extends ConsumerWidget {
     final controller = ref.read(qrInputTwitterProvider.notifier);
     return Scaffold(
       appBar: const AppBarCodeGenerate(
-        title: AppText.textTwitter,
+        title: AppText.textX,
       ),
       body: BoxCodeGenerate(
-        title: AppText.textTwitter,
-        iconSvg: AppAssets.twitterIcon,
+        title: AppText.textX,
+        iconSvg: AppAssets.xIcon,
         children: [
           TextFieldCodeGenerate(
-            title: 'Twitter Username',
-            onChanged: (value) =>
-                controller.onTwitterInputChanged(value: value),
+            title: 'X Username',
+            onChanged: (value) => controller.onXInputChanged(value: value),
             errorText: state.hasSubmitted ? state.errorMessage : null,
           ),
         ],
         onPressed: () => controller.submitQrForm(
           context: context,
-          type: AppText.twitterType,
+          type: AppText.xType,
         ),
       ),
     );
