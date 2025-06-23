@@ -31,7 +31,10 @@ class QrInputNotifier extends StateNotifier<QrInputState> {
     required BuildContext context,
     required String type,
   }) {
-    state = state.copyWith(hasSubmitted: true);
+    state = state.copyWith(
+      hasSubmitted: true,
+      errorMessage: state.errorMessage,
+    );
     final colors = Theme.of(context).colorScheme;
     if (state.isValid) {
       final qr = QREntity(
@@ -70,14 +73,13 @@ class QrInputState {
 
   QrInputState copyWith({
     EmptyInput? input,
-    EmailInput? emailInput,
     String? errorMessage,
     bool? isValid,
     bool? hasSubmitted,
   }) {
     return QrInputState(
       input: input ?? this.input,
-      errorMessage: errorMessage ?? this.errorMessage,
+      errorMessage: errorMessage,
       isValid: isValid ?? this.isValid,
       hasSubmitted: hasSubmitted ?? this.hasSubmitted,
     );

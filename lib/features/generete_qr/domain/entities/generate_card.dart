@@ -28,7 +28,7 @@ List<GenerateCardEntity> itemsGeneraCard = [
     route: '/generate_qr/wifi',
     pathIcon: AppAssets.wifiIcon,
   ),
-  GenerateCardEntity(
+  /* GenerateCardEntity(
     title: 'Event',
     route: '/generate_qr/event',
     pathIcon: AppAssets.eventIcon,
@@ -42,15 +42,15 @@ List<GenerateCardEntity> itemsGeneraCard = [
     title: 'Business',
     route: '/generate_qr/business',
     pathIcon: AppAssets.businessIcon,
-  ),
-  /* GenerateCardEntity(
+  ), 
+  GenerateCardEntity(
     title: 'Location',
     route: '/generate_qr/',
     pathIcon: AppAssets.locationIcon,
-  ),
+  ),*/
   GenerateCardEntity(
     title: 'WhatsApp',
-    route: '/generate_qr/',
+    route: '/generate_qr/whatsapp',
     pathIcon: AppAssets.whatsAppIcon,
   ),
   GenerateCardEntity(
@@ -72,5 +72,5 @@ List<GenerateCardEntity> itemsGeneraCard = [
     title: 'Telephone',
     route: '/generate_qr/',
     pathIcon: AppAssets.telephoneIcon,
-  ), */
+  ),
 ];

@@ -44,7 +44,10 @@ class QrInputWifiNotifier extends StateNotifier<QrInputWifiState> {
     required BuildContext context,
     required String type,
   }) {
-    state = state.copyWith(hasSubmitted: true);
+    state = state.copyWith(
+      hasSubmitted: true,
+      errorMessage: state.errorMessage,
+    );
     final colors = Theme.of(context).colorScheme;
     if (state.isValid) {
       final qr = QREntity(
@@ -93,7 +96,7 @@ class QrInputWifiState {
     return QrInputWifiState(
       wifi: wifi ?? this.wifi,
       password: password ?? this.password,
-      errorMessage: errorMessage ?? this.errorMessage,
+      errorMessage: errorMessage,
       isValid: isValid ?? this.isValid,
       hasSubmitted: hasSubmitted ?? this.hasSubmitted,
     );
