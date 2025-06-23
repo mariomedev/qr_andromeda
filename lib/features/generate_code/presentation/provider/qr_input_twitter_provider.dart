@@ -6,7 +6,10 @@ import '../../../../core/core.dart';
 import '../../../open_show_qr/domain/domain.dart';
 
 final qrInputTwitterProvider =
-    StateNotifierProvider<QrInputTwitterNotifier, QrInputTwitterState>((
+    StateNotifierProvider.autoDispose<
+      QrInputTwitterNotifier,
+      QrInputTwitterState
+    >((
       ref,
     ) {
       return QrInputTwitterNotifier();

@@ -6,7 +6,7 @@ import '../../../../core/core.dart';
 import '../../../open_show_qr/domain/domain.dart';
 
 final qrInputPhoneProvider =
-    StateNotifierProvider<QrInputPhoneNotifier, QrInputPhoneState>((
+    StateNotifierProvider.autoDispose<QrInputPhoneNotifier, QrInputPhoneState>((
       ref,
     ) {
       return QrInputPhoneNotifier();

@@ -6,7 +6,7 @@ import '../../../../core/core.dart';
 import '../../../open_show_qr/domain/domain.dart';
 
 final qrInputWebProvider =
-    StateNotifierProvider<QrInputWebNotifier, QrInputWebState>((
+    StateNotifierProvider.autoDispose<QrInputWebNotifier, QrInputWebState>((
       ref,
     ) {
       return QrInputWebNotifier();

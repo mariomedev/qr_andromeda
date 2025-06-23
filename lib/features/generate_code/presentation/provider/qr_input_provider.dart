@@ -5,11 +5,12 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/core.dart';
 import '../../../open_show_qr/domain/domain.dart';
 
-final qrInputProvider = StateNotifierProvider<QrInputNotifier, QrInputState>((
-  ref,
-) {
-  return QrInputNotifier();
-});
+final qrInputProvider =
+    StateNotifierProvider.autoDispose<QrInputNotifier, QrInputState>((
+      ref,
+    ) {
+      return QrInputNotifier();
+    });
 
 class QrInputNotifier extends StateNotifier<QrInputState> {
   QrInputNotifier() : super(QrInputState());

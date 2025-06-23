@@ -6,7 +6,10 @@ import '../../../../core/core.dart';
 import '../../../open_show_qr/domain/domain.dart';
 
 final qrInputWhatsappProvider =
-    StateNotifierProvider<QrInputWhatsappNotifier, QrInputWhatsappState>((
+    StateNotifierProvider.autoDispose<
+      QrInputWhatsappNotifier,
+      QrInputWhatsappState
+    >((
       ref,
     ) {
       return QrInputWhatsappNotifier();

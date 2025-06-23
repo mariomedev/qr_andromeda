@@ -6,7 +6,10 @@ import '../../../../core/core.dart';
 import '../../../open_show_qr/domain/domain.dart';
 
 final qrInputInstagramProvider =
-    StateNotifierProvider<QrInputInstagramNotifier, QrInputInstagramState>((
+    StateNotifierProvider.autoDispose<
+      QrInputInstagramNotifier,
+      QrInputInstagramState
+    >((
       ref,
     ) {
       return QrInputInstagramNotifier();

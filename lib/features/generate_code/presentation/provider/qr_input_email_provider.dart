@@ -6,7 +6,7 @@ import '../../../../core/core.dart';
 import '../../../open_show_qr/domain/domain.dart';
 
 final qrInputEmailProvider =
-    StateNotifierProvider<QrInputEmailNotifier, QrInputEmailState>((
+    StateNotifierProvider.autoDispose<QrInputEmailNotifier, QrInputEmailState>((
       ref,
     ) {
       return QrInputEmailNotifier();

@@ -7,7 +7,7 @@ import '../../../../core/core.dart';
 import '../../../open_show_qr/domain/domain.dart';
 
 final qrInputWifiProvider =
-    StateNotifierProvider<QrInputWifiNotifier, QrInputWifiState>((
+    StateNotifierProvider.autoDispose<QrInputWifiNotifier, QrInputWifiState>((
       ref,
     ) {
       return QrInputWifiNotifier();
