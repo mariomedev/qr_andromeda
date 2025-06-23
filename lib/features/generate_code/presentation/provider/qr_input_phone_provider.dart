@@ -5,18 +5,17 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/core.dart';
 import '../../../open_show_qr/domain/domain.dart';
 
-final qrInputNumberPhoneProvider =
-    StateNotifierProvider<QrInputNumberPhoneNotifier, QrInputNumberPhoneState>((
+final qrInputPhoneProvider =
+    StateNotifierProvider<QrInputPhoneNotifier, QrInputPhoneState>((
       ref,
     ) {
-      return QrInputNumberPhoneNotifier();
+      return QrInputPhoneNotifier();
     });
 
-class QrInputNumberPhoneNotifier
-    extends StateNotifier<QrInputNumberPhoneState> {
-  QrInputNumberPhoneNotifier() : super(QrInputNumberPhoneState());
+class QrInputPhoneNotifier extends StateNotifier<QrInputPhoneState> {
+  QrInputPhoneNotifier() : super(QrInputPhoneState());
 
-  void onWhatsappInputChanged({
+  void onPhoneInputChanged({
     required String value,
   }) {
     final newphone = NumberInput.dirty(value: value);
@@ -40,7 +39,7 @@ class QrInputNumberPhoneNotifier
     final colors = Theme.of(context).colorScheme;
     if (state.isValid) {
       final qr = QREntity(
-        data: 'https://wa.me/${state.phone.value.replaceFirst(r'+', '')}',
+        data: state.phone.value,
         isFromScan: false,
         type: type,
       );
@@ -60,26 +59,26 @@ class QrInputNumberPhoneNotifier
   }
 }
 
-class QrInputNumberPhoneState {
+class QrInputPhoneState {
   final NumberInput phone;
   final String? errorMessage;
   final bool isValid;
   final bool hasSubmitted;
 
-  QrInputNumberPhoneState({
+  QrInputPhoneState({
     this.phone = const NumberInput.pure(),
     this.errorMessage,
     this.isValid = false,
     this.hasSubmitted = false,
   });
 
-  QrInputNumberPhoneState copyWith({
+  QrInputPhoneState copyWith({
     NumberInput? phone,
     String? errorMessage,
     bool? isValid,
     bool? hasSubmitted,
   }) {
-    return QrInputNumberPhoneState(
+    return QrInputPhoneState(
       phone: phone ?? this.phone,
       errorMessage: errorMessage,
       isValid: isValid ?? this.isValid,

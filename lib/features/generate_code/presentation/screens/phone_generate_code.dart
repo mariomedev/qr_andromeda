@@ -6,13 +6,13 @@ import '../../../shared/shared.dart';
 import '../provider/provider.dart';
 import 'widgets/widgets.dart';
 
-class WhatsappGenerateCode extends ConsumerWidget {
-  const WhatsappGenerateCode({super.key});
+class PhoneGenerateCode extends ConsumerWidget {
+  const PhoneGenerateCode({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(qrInputWhatsappProvider);
-    final controller = ref.read(qrInputWhatsappProvider.notifier);
+    final state = ref.watch(qrInputPhoneProvider);
+    final controller = ref.read(qrInputPhoneProvider.notifier);
     return Scaffold(
       appBar: const AppBarCodeGenerate(
         title: AppText.textTitle,
@@ -23,8 +23,7 @@ class WhatsappGenerateCode extends ConsumerWidget {
         children: [
           TextFieldCodeGenerate(
             title: AppText.textWhatsapp,
-            onChanged: (value) =>
-                controller.onWhatsappInputChanged(value: value),
+            onChanged: (value) => controller.onPhoneInputChanged(value: value),
             errorText: state.hasSubmitted ? state.errorMessage : null,
           ),
         ],

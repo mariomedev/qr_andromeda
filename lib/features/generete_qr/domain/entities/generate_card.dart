@@ -70,7 +70,7 @@ List<GenerateCardEntity> itemsGeneraCard = [
   ),
   GenerateCardEntity(
     title: 'Telephone',
-    route: '/generate_qr/',
+    route: '/generate_qr/phone',
     pathIcon: AppAssets.telephoneIcon,
   ),
 ];

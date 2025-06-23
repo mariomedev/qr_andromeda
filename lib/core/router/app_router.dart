@@ -62,6 +62,10 @@ final GoRouter goRouter = GoRouter(
           path: '/instagram',
           builder: (context, state) => const InstagramGenerateCode(),
         ),
+        GoRoute(
+          path: '/phone',
+          builder: (context, state) => const PhoneGenerateCode(),
+        ),
       ],
     ),
     GoRoute(
