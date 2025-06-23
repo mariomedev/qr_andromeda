@@ -65,7 +65,7 @@ List<GenerateCardEntity> itemsGeneraCard = [
   ),
   GenerateCardEntity(
     title: 'Instagram',
-    route: '/generate_qr/',
+    route: '/generate_qr/instagram',
     pathIcon: AppAssets.instagramIcon,
   ),
   GenerateCardEntity(

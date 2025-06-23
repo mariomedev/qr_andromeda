@@ -58,6 +58,10 @@ final GoRouter goRouter = GoRouter(
           path: '/twitter',
           builder: (context, state) => const EmailGenerateCode(),
         ),
+        GoRoute(
+          path: '/instagram',
+          builder: (context, state) => const InstagramGenerateCode(),
+        ),
       ],
     ),
     GoRoute(

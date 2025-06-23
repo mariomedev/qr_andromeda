@@ -4,3 +4,4 @@ export 'qr_input_wifi_provider.dart';
 export 'qr_input_number_phone_provider.dart';
 export 'qr_input_email_provider.dart';
 export 'qr_input_twitter_provider.dart';
+export 'qr_input_instagram_provider.dart';
