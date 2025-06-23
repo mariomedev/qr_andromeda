@@ -54,6 +54,10 @@ final GoRouter goRouter = GoRouter(
           path: '/email',
           builder: (context, state) => const EmailGenerateCode(),
         ),
+        GoRoute(
+          path: '/twitter',
+          builder: (context, state) => const EmailGenerateCode(),
+        ),
       ],
     ),
     GoRoute(

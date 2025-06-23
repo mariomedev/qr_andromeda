@@ -60,7 +60,7 @@ List<GenerateCardEntity> itemsGeneraCard = [
   ),
   GenerateCardEntity(
     title: 'Twitter',
-    route: '/generate_qr/',
+    route: '/generate_qr/twitter',
     pathIcon: AppAssets.twitterIcon,
   ),
   GenerateCardEntity(
