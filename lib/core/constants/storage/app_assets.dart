@@ -43,5 +43,7 @@ class AppAssets {
 
   //open and Show
   static String copyOpenShowIcon = 'assets/svg/open_show/copy.svg';
+  static String linkOpenShowIcon = 'assets/svg/open_show/link.svg';
   static String saveOpenShowIcon = 'assets/svg/open_show/save.svg';
+  static String phoneOpenShowIcon = 'assets/svg/open_show/phone.svg';
 }
