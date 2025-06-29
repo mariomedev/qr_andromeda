@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:qr_andromeda/features/open_show_qr/domain/domain.dart';
 
 import '../../../../../../core/core.dart';
+import '../../../provider/providers.dart';
 import '../../widgets/button_open_show_qr.dart';
 
-class ButtonBarShow extends StatelessWidget {
+class ButtonBarShow extends ConsumerWidget {
+  final QREntity? qr;
   final Function()? onPressedShare;
   final Function()? onPressedSave;
   const ButtonBarShow({
     super.key,
+    this.qr,
     this.onPressedShare,
     this.onPressedSave,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final onPressedLink = ref.watch(qrShowProvider.notifier);
     return Row(
       spacing: AppDimensions.kSpacing10,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -28,6 +34,20 @@ class ButtonBarShow extends StatelessWidget {
           pathImage: AppAssets.saveOpenShowIcon,
           onPressed: onPressedSave,
         ),
+        if (qr != null) ...[
+          if (qr!.data.contains('http') || qr!.data.contains('https'))
+            ButtonOpenShowQr(
+              title: 'Link',
+              pathImage: AppAssets.linkOpenShowIcon,
+              onPressed: () => onPressedLink.launchInBrowser(context, qr!.data),
+            ),
+          if (qr!.type == AppText.phoneType)
+            ButtonOpenShowQr(
+              title: 'Call',
+              pathImage: AppAssets.phoneOpenShowIcon,
+              onPressed: () => onPressedLink.makePhoneCall(context, qr!.data),
+            ),
+        ],
       ],
     );
   }

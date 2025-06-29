@@ -16,11 +16,13 @@ final qrShowProvider = StateNotifierProvider<QrShowNotifier, QrShowState>((
   final permission = PermissionHandler();
   final saveService = ImageGallerySaver();
   final shareService = SharePlusImpl();
+  final urlLauncher = UrlLauncherPackage();
   return QrShowNotifier(
     qrRepo: qrRepo,
     permissionHandler: permission,
     imageSaver: saveService,
     shareService: shareService,
+    urlLauncher: urlLauncher,
     ref: ref,
   );
 });
@@ -30,6 +32,7 @@ class QrShowNotifier extends StateNotifier<QrShowState> {
   final PermissionAdapter permissionHandler;
   final ImagesSaveAdapter imageSaver;
   final ShareAdapter shareService;
+  final UrlLauncherAdapter urlLauncher;
   final Ref ref;
 
   QrShowNotifier({
@@ -37,6 +40,7 @@ class QrShowNotifier extends StateNotifier<QrShowState> {
     required this.permissionHandler,
     required this.imageSaver,
     required this.shareService,
+    required this.urlLauncher,
     required this.ref,
   }) : super(
          QrShowState(
@@ -132,6 +136,32 @@ class QrShowNotifier extends StateNotifier<QrShowState> {
       size: 1024,
     );
     if (bytes != null) await shareService.shareImageFromByteData(bytes);
+  }
+
+  Future<void> launchInBrowser(BuildContext context, String link) async {
+    final calLauched = await urlLauncher.launchLink(link);
+    if (!calLauched && context.mounted) {
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Could not open link: $link'),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    }
+  }
+
+  Future<void> makePhoneCall(BuildContext context, String number) async {
+    final calLauched = await urlLauncher.makePhoneCall(number);
+    if (!calLauched && context.mounted) {
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Could not open link: $number'),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    }
   }
 }
 
