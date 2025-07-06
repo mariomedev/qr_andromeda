@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:qr_andromeda/features/open_show_qr/domain/domain.dart';
 
 import '../../../../../core/core.dart';
@@ -20,7 +21,12 @@ class CardQrRead extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    final qr = QREntity(data: data, isFromScan: true, type: type);
+    final qr = QREntity.fromDecoration(
+      data: data,
+      isFromScan: true,
+      type: type,
+      decoration: const PrettyQrDecoration(background: Colors.black),
+    );
     return GestureDetector(
       onTap: () async {
         context.push(

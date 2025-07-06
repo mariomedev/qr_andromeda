@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pretty_qr_code/pretty_qr_code.dart';
 
 import '../../../../core/core.dart';
 import '../../../open_show_qr/domain/domain.dart';
@@ -38,10 +39,11 @@ class QrInputWebNotifier extends StateNotifier<QrInputWebState> {
     );
     final colors = Theme.of(context).colorScheme;
     if (state.isValid) {
-      final qr = QREntity(
+      final qr = QREntity.fromDecoration(
         data: state.web.value,
         isFromScan: false,
         type: type,
+        decoration: const PrettyQrDecoration(),
       );
       context.push(
         '/show_qr',

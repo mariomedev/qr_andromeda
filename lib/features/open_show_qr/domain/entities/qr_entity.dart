@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
+import 'package:pretty_qr_code/pretty_qr_code.dart';
+
+import '../../infrastruture/infrastruture.dart';
 
 part 'qr_entity.g.dart';
 
@@ -9,34 +11,37 @@ class QREntity {
   final String data;
   final String type;
   final bool isFromScan;
-  late int colorValue;
-  late int zone;
+  late String decorationJson;
   DateTime? createdAt;
   DateTime? updated;
 
   QREntity({
     required this.data,
-    required this.isFromScan,
     required this.type,
-    this.zone = 0,
-    this.colorValue = 0,
-    this.updated,
+    required this.isFromScan,
+    required this.decorationJson,
     this.createdAt,
-  }) {
-    createdAt = createdAt ?? DateTime.now();
-    updated = updated ?? DateTime.now();
-  }
+    this.updated,
+  });
 
   @ignore
-  Color get color => Color(colorValue);
+  PrettyQrDecoration get decoration =>
+      PrettyQrDecorationMapper.decode(decorationJson);
 
-  set color(Color c) => colorValue = c.toARGB32();
+  set decoration(PrettyQrDecoration d) =>
+      decorationJson = PrettyQrDecorationMapper.encode(d);
 
-  @override
-  String toString() =>
-      '''
-    id: $id
-    data: $data
-    isFromScan: $isFromScan
-  ''';
+  factory QREntity.fromDecoration({
+    required String data,
+    required String type,
+    required bool isFromScan,
+    required PrettyQrDecoration decoration,
+  }) {
+    return QREntity(
+      data: data,
+      type: type,
+      isFromScan: isFromScan,
+      decorationJson: PrettyQrDecorationMapper.encode(decoration),
+    );
+  }
 }

@@ -9,23 +9,24 @@ import '../../../history/presentation/providers/providers.dart';
 import '../../domain/domain.dart';
 import 'qr_repository.dart';
 
-final qrShowProvider = StateNotifierProvider<QrShowNotifier, QrShowState>((
-  ref,
-) {
-  final qrRepo = ref.watch(qrRepositoryProvider); // Tu repositorio QR
-  final permission = PermissionHandler();
-  final saveService = ImageGallerySaver();
-  final shareService = SharePlusImpl();
-  final urlLauncher = UrlLauncherPackage();
-  return QrShowNotifier(
-    qrRepo: qrRepo,
-    permissionHandler: permission,
-    imageSaver: saveService,
-    shareService: shareService,
-    urlLauncher: urlLauncher,
-    ref: ref,
-  );
-});
+final qrShowProvider =
+    StateNotifierProvider.autoDispose<QrShowNotifier, QrShowState>((
+      ref,
+    ) {
+      final qrRepo = ref.watch(qrRepositoryProvider); // Tu repositorio QR
+      final permission = PermissionHandler();
+      final saveService = ImageGallerySaver();
+      final shareService = SharePlusImpl();
+      final urlLauncher = UrlLauncherPackage();
+      return QrShowNotifier(
+        qrRepo: qrRepo,
+        permissionHandler: permission,
+        imageSaver: saveService,
+        shareService: shareService,
+        urlLauncher: urlLauncher,
+        ref: ref,
+      );
+    });
 
 class QrShowNotifier extends StateNotifier<QrShowState> {
   final QRRepo qrRepo;
@@ -79,6 +80,8 @@ class QrShowNotifier extends StateNotifier<QrShowState> {
     );
     if (confirmed != true) return;
 
+    qr.decoration = state.decoration;
+
     (isNew) ? saveQr(qr) : updateQr(qr);
   }
 
@@ -91,7 +94,6 @@ class QrShowNotifier extends StateNotifier<QrShowState> {
   }
 
   Future<bool> saveQr(QREntity qr) async {
-    qr.color = getCurrentColor();
     try {
       await qrRepo.saveQRData(data: qr);
       ref.read(historyProvider.notifier).addQr(qr);
@@ -102,7 +104,6 @@ class QrShowNotifier extends StateNotifier<QrShowState> {
   }
 
   Future<bool> updateQr(QREntity qr) async {
-    qr.color = getCurrentColor();
     qr.updated = DateTime.now();
     try {
       await qrRepo.updateQrData(id: qr.id, data: qr);

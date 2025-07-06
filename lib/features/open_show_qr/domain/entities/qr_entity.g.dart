@@ -17,19 +17,19 @@ const QREntitySchema = CollectionSchema(
   name: r'QREntity',
   id: 2693669477128540249,
   properties: {
-    r'colorValue': PropertySchema(
-      id: 0,
-      name: r'colorValue',
-      type: IsarType.long,
-    ),
     r'createdAt': PropertySchema(
-      id: 1,
+      id: 0,
       name: r'createdAt',
       type: IsarType.dateTime,
     ),
     r'data': PropertySchema(
-      id: 2,
+      id: 1,
       name: r'data',
+      type: IsarType.string,
+    ),
+    r'decorationJson': PropertySchema(
+      id: 2,
+      name: r'decorationJson',
       type: IsarType.string,
     ),
     r'isFromScan': PropertySchema(
@@ -46,11 +46,6 @@ const QREntitySchema = CollectionSchema(
       id: 5,
       name: r'updated',
       type: IsarType.dateTime,
-    ),
-    r'zone': PropertySchema(
-      id: 6,
-      name: r'zone',
-      type: IsarType.long,
     )
   },
   estimateSize: _qREntityEstimateSize,
@@ -74,6 +69,7 @@ int _qREntityEstimateSize(
 ) {
   var bytesCount = offsets.last;
   bytesCount += 3 + object.data.length * 3;
+  bytesCount += 3 + object.decorationJson.length * 3;
   bytesCount += 3 + object.type.length * 3;
   return bytesCount;
 }
@@ -84,13 +80,12 @@ void _qREntitySerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeLong(offsets[0], object.colorValue);
-  writer.writeDateTime(offsets[1], object.createdAt);
-  writer.writeString(offsets[2], object.data);
+  writer.writeDateTime(offsets[0], object.createdAt);
+  writer.writeString(offsets[1], object.data);
+  writer.writeString(offsets[2], object.decorationJson);
   writer.writeBool(offsets[3], object.isFromScan);
   writer.writeString(offsets[4], object.type);
   writer.writeDateTime(offsets[5], object.updated);
-  writer.writeLong(offsets[6], object.zone);
 }
 
 QREntity _qREntityDeserialize(
@@ -100,13 +95,12 @@ QREntity _qREntityDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = QREntity(
-    colorValue: reader.readLongOrNull(offsets[0]) ?? 0,
-    createdAt: reader.readDateTimeOrNull(offsets[1]),
-    data: reader.readString(offsets[2]),
+    createdAt: reader.readDateTimeOrNull(offsets[0]),
+    data: reader.readString(offsets[1]),
+    decorationJson: reader.readString(offsets[2]),
     isFromScan: reader.readBool(offsets[3]),
     type: reader.readString(offsets[4]),
     updated: reader.readDateTimeOrNull(offsets[5]),
-    zone: reader.readLongOrNull(offsets[6]) ?? 0,
   );
   object.id = id;
   return object;
@@ -120,9 +114,9 @@ P _qREntityDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readLongOrNull(offset) ?? 0) as P;
-    case 1:
       return (reader.readDateTimeOrNull(offset)) as P;
+    case 1:
+      return (reader.readString(offset)) as P;
     case 2:
       return (reader.readString(offset)) as P;
     case 3:
@@ -131,8 +125,6 @@ P _qREntityDeserializeProp<P>(
       return (reader.readString(offset)) as P;
     case 5:
       return (reader.readDateTimeOrNull(offset)) as P;
-    case 6:
-      return (reader.readLongOrNull(offset) ?? 0) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -227,59 +219,6 @@ extension QREntityQueryWhere on QueryBuilder<QREntity, QREntity, QWhereClause> {
 
 extension QREntityQueryFilter
     on QueryBuilder<QREntity, QREntity, QFilterCondition> {
-  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> colorValueEqualTo(
-      int value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'colorValue',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> colorValueGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'colorValue',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> colorValueLessThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'colorValue',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> colorValueBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'colorValue',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
   QueryBuilder<QREntity, QREntity, QAfterFilterCondition> createdAtIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -474,6 +413,141 @@ extension QREntityQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'data',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> decorationJsonEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'decorationJson',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition>
+      decorationJsonGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'decorationJson',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition>
+      decorationJsonLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'decorationJson',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> decorationJsonBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'decorationJson',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition>
+      decorationJsonStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'decorationJson',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition>
+      decorationJsonEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'decorationJson',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition>
+      decorationJsonContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'decorationJson',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> decorationJsonMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'decorationJson',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition>
+      decorationJsonIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'decorationJson',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterFilterCondition>
+      decorationJsonIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'decorationJson',
         value: '',
       ));
     });
@@ -739,59 +813,6 @@ extension QREntityQueryFilter
       ));
     });
   }
-
-  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> zoneEqualTo(
-      int value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'zone',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> zoneGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'zone',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> zoneLessThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'zone',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<QREntity, QREntity, QAfterFilterCondition> zoneBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'zone',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
 }
 
 extension QREntityQueryObject
@@ -801,18 +822,6 @@ extension QREntityQueryLinks
     on QueryBuilder<QREntity, QREntity, QFilterCondition> {}
 
 extension QREntityQuerySortBy on QueryBuilder<QREntity, QREntity, QSortBy> {
-  QueryBuilder<QREntity, QREntity, QAfterSortBy> sortByColorValue() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'colorValue', Sort.asc);
-    });
-  }
-
-  QueryBuilder<QREntity, QREntity, QAfterSortBy> sortByColorValueDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'colorValue', Sort.desc);
-    });
-  }
-
   QueryBuilder<QREntity, QREntity, QAfterSortBy> sortByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.asc);
@@ -834,6 +843,18 @@ extension QREntityQuerySortBy on QueryBuilder<QREntity, QREntity, QSortBy> {
   QueryBuilder<QREntity, QREntity, QAfterSortBy> sortByDataDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'data', Sort.desc);
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterSortBy> sortByDecorationJson() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'decorationJson', Sort.asc);
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterSortBy> sortByDecorationJsonDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'decorationJson', Sort.desc);
     });
   }
 
@@ -872,34 +893,10 @@ extension QREntityQuerySortBy on QueryBuilder<QREntity, QREntity, QSortBy> {
       return query.addSortBy(r'updated', Sort.desc);
     });
   }
-
-  QueryBuilder<QREntity, QREntity, QAfterSortBy> sortByZone() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'zone', Sort.asc);
-    });
-  }
-
-  QueryBuilder<QREntity, QREntity, QAfterSortBy> sortByZoneDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'zone', Sort.desc);
-    });
-  }
 }
 
 extension QREntityQuerySortThenBy
     on QueryBuilder<QREntity, QREntity, QSortThenBy> {
-  QueryBuilder<QREntity, QREntity, QAfterSortBy> thenByColorValue() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'colorValue', Sort.asc);
-    });
-  }
-
-  QueryBuilder<QREntity, QREntity, QAfterSortBy> thenByColorValueDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'colorValue', Sort.desc);
-    });
-  }
-
   QueryBuilder<QREntity, QREntity, QAfterSortBy> thenByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.asc);
@@ -921,6 +918,18 @@ extension QREntityQuerySortThenBy
   QueryBuilder<QREntity, QREntity, QAfterSortBy> thenByDataDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'data', Sort.desc);
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterSortBy> thenByDecorationJson() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'decorationJson', Sort.asc);
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QAfterSortBy> thenByDecorationJsonDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'decorationJson', Sort.desc);
     });
   }
 
@@ -971,28 +980,10 @@ extension QREntityQuerySortThenBy
       return query.addSortBy(r'updated', Sort.desc);
     });
   }
-
-  QueryBuilder<QREntity, QREntity, QAfterSortBy> thenByZone() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'zone', Sort.asc);
-    });
-  }
-
-  QueryBuilder<QREntity, QREntity, QAfterSortBy> thenByZoneDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'zone', Sort.desc);
-    });
-  }
 }
 
 extension QREntityQueryWhereDistinct
     on QueryBuilder<QREntity, QREntity, QDistinct> {
-  QueryBuilder<QREntity, QREntity, QDistinct> distinctByColorValue() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'colorValue');
-    });
-  }
-
   QueryBuilder<QREntity, QREntity, QDistinct> distinctByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'createdAt');
@@ -1003,6 +994,14 @@ extension QREntityQueryWhereDistinct
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'data', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<QREntity, QREntity, QDistinct> distinctByDecorationJson(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'decorationJson',
+          caseSensitive: caseSensitive);
     });
   }
 
@@ -1024,12 +1023,6 @@ extension QREntityQueryWhereDistinct
       return query.addDistinctBy(r'updated');
     });
   }
-
-  QueryBuilder<QREntity, QREntity, QDistinct> distinctByZone() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'zone');
-    });
-  }
 }
 
 extension QREntityQueryProperty
@@ -1037,12 +1030,6 @@ extension QREntityQueryProperty
   QueryBuilder<QREntity, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
-    });
-  }
-
-  QueryBuilder<QREntity, int, QQueryOperations> colorValueProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'colorValue');
     });
   }
 
@@ -1055,6 +1042,12 @@ extension QREntityQueryProperty
   QueryBuilder<QREntity, String, QQueryOperations> dataProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'data');
+    });
+  }
+
+  QueryBuilder<QREntity, String, QQueryOperations> decorationJsonProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'decorationJson');
     });
   }
 
@@ -1073,12 +1066,6 @@ extension QREntityQueryProperty
   QueryBuilder<QREntity, DateTime?, QQueryOperations> updatedProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'updated');
-    });
-  }
-
-  QueryBuilder<QREntity, int, QQueryOperations> zoneProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'zone');
     });
   }
 }

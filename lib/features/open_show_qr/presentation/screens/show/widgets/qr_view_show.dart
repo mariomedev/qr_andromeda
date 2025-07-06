@@ -16,6 +16,7 @@ class QrViewShow extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(qrShowProvider);
     final controller = ref.read(qrShowProvider.notifier);
+
     final qrImage = QrImage(
       QrCode.fromData(
         data: qr.data,
@@ -24,8 +25,18 @@ class QrViewShow extends ConsumerWidget {
     );
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (state.qrImage == null) {
+      final controller = ref.read(qrShowProvider.notifier);
+      final qrImage = QrImage(
+        QrCode.fromData(
+          data: qr.data,
+          errorCorrectLevel: QrErrorCorrectLevel.H,
+        ),
+      );
+
+      // Solo si no se ha inicializado aún
+      if (ref.read(qrShowProvider).qrImage == null) {
         controller.setQrImage(qrImage);
+        controller.updateDecoration(qr.decoration); // ← Aquí lo asignas
       }
     });
 
