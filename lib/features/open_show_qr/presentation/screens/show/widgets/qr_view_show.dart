@@ -58,7 +58,11 @@ class QrViewShow extends ConsumerWidget {
         ),
         ButtonBarShow(
           qr: qr,
-          onPressedSave: () => controller.showAlert(context, qr),
+          onPressedSave: () => showSaveOrUpdateDialog(
+            context: context,
+            ref: ref,
+            qr: qr,
+          ),
           onPressedShare: () => controller.shareImage(state.qrImage!),
         ),
       ],

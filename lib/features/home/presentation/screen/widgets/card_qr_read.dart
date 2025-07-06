@@ -25,7 +25,7 @@ class CardQrRead extends StatelessWidget {
       data: data,
       isFromScan: true,
       type: type,
-      decoration: const PrettyQrDecoration(background: Colors.black),
+      decoration: const PrettyQrDecoration(),
     );
     return GestureDetector(
       onTap: () async {

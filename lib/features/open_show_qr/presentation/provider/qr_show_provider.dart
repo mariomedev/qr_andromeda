@@ -13,7 +13,8 @@ final qrShowProvider =
     StateNotifierProvider.autoDispose<QrShowNotifier, QrShowState>((
       ref,
     ) {
-      final qrRepo = ref.watch(qrRepositoryProvider); // Tu repositorio QR
+      final qrRepo = ref.watch(qrRepositoryProvider);
+      final historyQr = ref.watch(historyProvider.notifier);
       final permission = PermissionHandler();
       final saveService = ImageGallerySaver();
       final shareService = SharePlusImpl();
@@ -24,7 +25,7 @@ final qrShowProvider =
         imageSaver: saveService,
         shareService: shareService,
         urlLauncher: urlLauncher,
-        ref: ref,
+        historyQr: historyQr,
       );
     });
 
@@ -34,7 +35,7 @@ class QrShowNotifier extends StateNotifier<QrShowState> {
   final ImagesSaveAdapter imageSaver;
   final ShareAdapter shareService;
   final UrlLauncherAdapter urlLauncher;
-  final Ref ref;
+  final HistoryNotifier historyQr;
 
   QrShowNotifier({
     required this.qrRepo,
@@ -42,47 +43,34 @@ class QrShowNotifier extends StateNotifier<QrShowState> {
     required this.imageSaver,
     required this.shareService,
     required this.urlLauncher,
-    required this.ref,
+    required this.historyQr,
   }) : super(
          QrShowState(
            decoration: const PrettyQrDecoration(
              shape: PrettyQrSmoothSymbol(color: Colors.black),
-             background: Colors.transparent,
+             background: Colors.white,
              image: null,
              quietZone: PrettyQrQuietZone.zero,
            ),
          ),
        );
 
-  Future<void> showAlert(BuildContext context, QREntity qr) async {
+  Future<bool> saveOrUpdateQr(QREntity qr) async {
+    qr.decoration = state.decoration;
     final isNew = qr.id <= 0;
 
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(isNew ? 'Save Data' : 'Update Data'),
-        content: Text(
-          isNew
-              ? 'Do you want to save this Data?'
-              : 'Do you want to update this Data?',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('Confirm'),
-          ),
-        ],
-      ),
-    );
-    if (confirmed != true) return;
-
-    qr.decoration = state.decoration;
-
-    (isNew) ? saveQr(qr) : updateQr(qr);
+    try {
+      if (isNew) {
+        await qrRepo.saveQRData(data: qr);
+        historyQr.addQr(qr);
+      } else {
+        qr.updated = DateTime.now();
+        await qrRepo.updateQrData(id: qr.id, data: qr);
+      }
+      return true;
+    } catch (_) {
+      return false;
+    }
   }
 
   void updateDecoration(PrettyQrDecoration decoration) {
@@ -96,7 +84,7 @@ class QrShowNotifier extends StateNotifier<QrShowState> {
   Future<bool> saveQr(QREntity qr) async {
     try {
       await qrRepo.saveQRData(data: qr);
-      ref.read(historyProvider.notifier).addQr(qr);
+      historyQr.addQr(qr);
       return true;
     } catch (e) {
       return false;
