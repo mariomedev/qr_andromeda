@@ -1,9 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 
-import '../../../provider/providers.dart';
+import '../../../../../../core/core.dart';
 
 class SettingsQrShow extends ConsumerStatefulWidget {
   @protected
@@ -218,7 +220,18 @@ class _PrettyQrSettingsState extends ConsumerState<SettingsQrShow> {
             leading: const Icon(Icons.image_outlined),
             title: const Text('Change image'),
             onTap: () async {
-              await ref.read(qrShowProvider.notifier).selectImageFromGallery();
+              final image = await ref
+                  .read(selectImageProvider.notifier)
+                  .selectImageFromGallery();
+              if (image == null) return;
+              final imageFile = File(image.path);
+              widget.onChanged?.call(
+                widget.decoration.copyWith(
+                  image: PrettyQrDecorationImage(
+                    image: FileImage(imageFile),
+                  ),
+                ),
+              );
             },
           ),
         ],

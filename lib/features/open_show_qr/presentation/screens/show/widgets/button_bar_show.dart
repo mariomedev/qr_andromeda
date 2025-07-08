@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_andromeda/features/open_show_qr/domain/domain.dart';
 
 import '../../../../../../core/core.dart';
-import '../../../provider/providers.dart';
 import '../../widgets/button_open_show_qr.dart';
 
 class ButtonBarShow extends ConsumerWidget {
@@ -19,7 +18,7 @@ class ButtonBarShow extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final onPressedLink = ref.watch(qrShowProvider.notifier);
+    final onPressedLink = ref.watch(urlLauncherProvider.notifier);
     return Row(
       spacing: AppDimensions.kSpacing10,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -39,13 +38,13 @@ class ButtonBarShow extends ConsumerWidget {
             ButtonOpenShowQr(
               title: 'Link',
               pathImage: AppAssets.linkOpenShowIcon,
-              onPressed: () => onPressedLink.launchInBrowser(context, qr!.data),
+              onPressed: () => onPressedLink.launchLink(qr!.data),
             ),
           if (qr!.type == AppText.phoneType)
             ButtonOpenShowQr(
               title: 'Call',
               pathImage: AppAssets.phoneOpenShowIcon,
-              onPressed: () => onPressedLink.makePhoneCall(context, qr!.data),
+              onPressed: () => onPressedLink.makePhoneCall(qr!.data),
             ),
         ],
       ],

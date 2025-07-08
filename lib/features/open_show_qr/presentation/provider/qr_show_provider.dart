@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -19,16 +18,12 @@ final qrShowProvider =
       final permission = PermissionHandler();
       final saveService = ImageGallerySaver();
       final shareService = SharePlusImpl();
-      final urlLauncher = UrlLauncherPackage();
-      final selectImage = ImagePickerPackage();
       return QrShowNotifier(
         qrRepo: qrRepo,
         permissionHandler: permission,
         imageSaver: saveService,
         shareService: shareService,
-        urlLauncher: urlLauncher,
         historyQr: historyQr,
-        selectImage: selectImage,
       );
     });
 
@@ -37,18 +32,14 @@ class QrShowNotifier extends StateNotifier<QrShowState> {
   final PermissionAdapter permissionHandler;
   final ImagesSaveAdapter imageSaver;
   final ShareAdapter shareService;
-  final UrlLauncherAdapter urlLauncher;
   final HistoryNotifier historyQr;
-  final SelectImageAdapter selectImage;
 
   QrShowNotifier({
     required this.qrRepo,
     required this.permissionHandler,
     required this.imageSaver,
     required this.shareService,
-    required this.urlLauncher,
     required this.historyQr,
-    required this.selectImage,
   }) : super(
          QrShowState(
            decoration: const PrettyQrDecoration(
@@ -130,47 +121,6 @@ class QrShowNotifier extends StateNotifier<QrShowState> {
       size: 1024,
     );
     if (bytes != null) await shareService.shareImageFromByteData(bytes);
-  }
-
-  Future<void> launchInBrowser(BuildContext context, String link) async {
-    final calLauched = await urlLauncher.launchLink(link);
-    if (!calLauched && context.mounted) {
-      ScaffoldMessenger.of(context).removeCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Could not open link: $link'),
-          duration: const Duration(seconds: 2),
-        ),
-      );
-    }
-  }
-
-  Future<void> makePhoneCall(BuildContext context, String number) async {
-    final calLauched = await urlLauncher.makePhoneCall(number);
-    if (!calLauched && context.mounted) {
-      ScaffoldMessenger.of(context).removeCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Could not open link: $number'),
-          duration: const Duration(seconds: 2),
-        ),
-      );
-    }
-  }
-
-  Future<void> selectImageFromGallery() async {
-    try {
-      final image = await selectImage.selectImagefromGallery();
-      if (image == null) return;
-      final fileImage = File(image.path);
-      state = state.copyWith(
-        decoration: state.decoration.copyWith(
-          image: PrettyQrDecorationImage(image: FileImage(fileImage)),
-        ),
-      );
-    } catch (e) {
-      throw Exception('Error selecting image: $e');
-    }
   }
 }
 
