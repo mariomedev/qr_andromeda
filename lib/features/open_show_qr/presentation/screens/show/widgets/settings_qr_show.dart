@@ -3,6 +3,8 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 
+import '../../../provider/providers.dart';
+
 class SettingsQrShow extends ConsumerStatefulWidget {
   @protected
   final PrettyQrDecoration decoration;
@@ -186,7 +188,7 @@ class _PrettyQrSettingsState extends ConsumerState<SettingsQrShow> {
           ),
           title: const Text('Image'),
         ),
-        if (widget.decoration.image != null)
+        if (widget.decoration.image != null) ...[
           ListTile(
             enabled: widget.decoration.image != null,
             leading: const Icon(Icons.layers_outlined),
@@ -212,6 +214,15 @@ class _PrettyQrSettingsState extends ConsumerState<SettingsQrShow> {
               },
             ),
           ),
+          ListTile(
+            leading: const Icon(Icons.image_outlined),
+            title: const Text('Change image'),
+            onTap: () async {
+              await ref.read(qrShowProvider.notifier).selectImageFromGallery();
+            },
+          ),
+        ],
+
         if (widget.onExportPressed != null) ...[
           const Divider(),
           ListTile(

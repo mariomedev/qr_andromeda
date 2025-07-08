@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ final qrShowProvider =
       final saveService = ImageGallerySaver();
       final shareService = SharePlusImpl();
       final urlLauncher = UrlLauncherPackage();
+      final selectImage = ImagePickerPackage();
       return QrShowNotifier(
         qrRepo: qrRepo,
         permissionHandler: permission,
@@ -26,6 +28,7 @@ final qrShowProvider =
         shareService: shareService,
         urlLauncher: urlLauncher,
         historyQr: historyQr,
+        selectImage: selectImage,
       );
     });
 
@@ -36,6 +39,7 @@ class QrShowNotifier extends StateNotifier<QrShowState> {
   final ShareAdapter shareService;
   final UrlLauncherAdapter urlLauncher;
   final HistoryNotifier historyQr;
+  final SelectImageAdapter selectImage;
 
   QrShowNotifier({
     required this.qrRepo,
@@ -44,6 +48,7 @@ class QrShowNotifier extends StateNotifier<QrShowState> {
     required this.shareService,
     required this.urlLauncher,
     required this.historyQr,
+    required this.selectImage,
   }) : super(
          QrShowState(
            decoration: const PrettyQrDecoration(
@@ -150,6 +155,21 @@ class QrShowNotifier extends StateNotifier<QrShowState> {
           duration: const Duration(seconds: 2),
         ),
       );
+    }
+  }
+
+  Future<void> selectImageFromGallery() async {
+    try {
+      final image = await selectImage.selectImagefromGallery();
+      if (image == null) return;
+      final fileImage = File(image.path);
+      state = state.copyWith(
+        decoration: state.decoration.copyWith(
+          image: PrettyQrDecorationImage(image: FileImage(fileImage)),
+        ),
+      );
+    } catch (e) {
+      throw Exception('Error selecting image: $e');
     }
   }
 }
